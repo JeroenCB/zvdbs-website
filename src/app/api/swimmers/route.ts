@@ -1,93 +1,126 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { google } from 'googleapis';
 
 interface Swimmer {
   [key: string]: any;
   points?: number;
 }
 
+let cachedAuth: any = null;
+
+async function getAuthClient() {
+  // Use cached auth for performance
+  if (cachedAuth) {
+    return cachedAuth;
+  }
+
+  const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
+  const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
+  const projectId = process.env.GOOGLE_SHEETS_PROJECT_ID;
+
+  if (!privateKey || !clientEmail || !projectId) {
+    throw new Error('Missing Google credentials (GOOGLE_SHEETS_PRIVATE_KEY, GOOGLE_SHEETS_CLIENT_EMAIL, GOOGLE_SHEETS_PROJECT_ID)');
+  }
+
+  // Replace literal \n with actual newlines
+  const formattedKey = privateKey.replace(/\\n/g, '\n');
+
+  const auth = new google.auth.GoogleAuth({
+    credentials: {
+      type: 'service_account',
+      project_id: projectId,
+      private_key_id: 'key-id',
+      private_key: formattedKey,
+      client_email: clientEmail,
+      client_id: '1',
+      auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_uri: 'https://oauth2.googleapis.com/token',
+      auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+    },
+    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+  });
+
+  cachedAuth = auth;
+  return auth;
+}
+
 export async function GET(request: NextRequest) {
   try {
-    // Environment variables
     const sheetId = process.env.GOOGLE_SHEETS_ID;
     const gid = process.env.GOOGLE_SHEETS_GID;
-    const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
-    const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
 
-    if (!sheetId || !gid || !privateKey || !clientEmail) {
+    if (!sheetId || !gid) {
       return NextResponse.json(
-        { error: 'Google Sheets credentials not configured' },
+        { error: 'Sheet ID or GID not configured' },
         { status: 500 }
       );
     }
 
-    // Fetch CSV via unauthenticated export (works for shared sheets)
-    // Or use Google Sheets API with service account
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+    console.log('📊 Authenticating with Google Sheets API...');
 
-    const response = await fetch(csvUrl, {
-      headers: {
-        'User-Agent': 'ZVDBS-Website/1.0',
-      },
+    // Get auth client
+    const auth = await getAuthClient();
+
+    // Create Sheets API client
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    console.log('✅ Fetching from Adelskalender sheet...');
+
+    // Fetch data from sheet
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: sheetId,
+      range: 'Adelskalender!A:AD', // Get columns A through AD
     });
 
-    if (!response.ok) {
-      console.error('Google Sheets fetch failed:', response.status, response.statusText);
+    const values = response.data.values;
+
+    if (!values || values.length < 2) {
       return NextResponse.json(
-        { error: `Failed to fetch Google Sheet: ${response.statusText}` },
-        { status: response.status }
+        { error: 'No data found in Adelskalender sheet' },
+        { status: 400 }
       );
     }
 
-    const csvText = await response.text();
-
-    // Parse CSV
-    const lines = csvText.trim().split('\n');
-    if (lines.length < 2) {
-      return NextResponse.json({ error: 'No data in sheet' }, { status: 400 });
-    }
-
-    // Parse header line
-    const headerLine = lines[0];
-    const headers = parseCSVLine(headerLine);
+    const headers = values[0];
+    console.log('✅ Headers found:', headers.slice(0, 10));
 
     // Find column indices
     const colA = findColumnIndex(headers, ['a', 'naam', 'name', 'persoon']);
-    const colAD = findColumnIndex(headers, ['ad', 'ck', 'ck 2', 'c.k. 2', 'adelskalender']);
-    const colB = findColumnIndex(headers, ['b', 'categorie', 'category', 'cat']);
+    const colAD = findColumnIndex(headers, ['ad', 'ck', 'ck 2', 'c.k. 2']);
+    const colB = findColumnIndex(headers, ['b', 'categorie', 'category']);
 
-    console.log('✅ Google Sheets API - Column indices:', { colA, colB, colAD });
+    console.log('✅ Column indices:', { colA, colB, colAD });
 
-    // Parse data rows
+    // Parse swimmers
     const swimmers: Swimmer[] = [];
-    for (let i = 1; i < lines.length; i++) {
-      const cells = parseCSVLine(lines[i]);
+    for (let i = 1; i < values.length; i++) {
+      const row = values[i];
+      const nameCell = colA >= 0 ? row[colA] : row[0];
 
-      // Skip empty rows
-      const nameCell = colA >= 0 ? cells[colA] : cells[0];
       if (!nameCell || nameCell.trim() === '') continue;
 
       const swimmer: Swimmer = {};
 
-      // Map all columns
-      headers.forEach((header, idx) => {
+      headers.forEach((header: string, idx: number) => {
         const key = header.toLowerCase().trim().replace(/\s+/g, '_');
-        swimmer[key] = cells[idx] || '';
+        swimmer[key] = row[idx] || '';
       });
 
-      // Parse C.K. 2 points
-      if (colAD >= 0 && cells[colAD]) {
-        swimmer.points = parseFloat(cells[colAD]) || 0;
+      if (colAD >= 0 && row[colAD]) {
+        swimmer.points = parseFloat(row[colAD]) || 0;
       }
 
       swimmers.push(swimmer);
     }
 
-    // Sort by points (C.K. 2)
+    // Sort by points
     swimmers.sort((a, b) => {
       const aPoints = typeof a.points === 'number' ? a.points : 0;
       const bPoints = typeof b.points === 'number' ? b.points : 0;
       return bPoints - aPoints;
     });
+
+    console.log(`✅ Loaded ${swimmers.length} swimmers`);
 
     return NextResponse.json({
       success: true,
@@ -99,10 +132,10 @@ export async function GET(request: NextRequest) {
       columnA: colA,
       columnB: colB,
       lastFetched: new Date().toISOString(),
-      source: 'Google Sheets (Adelskalender)',
+      source: 'Google Sheets API v4 (Service Account)',
     });
   } catch (error) {
-    console.error('❌ Error fetching swimmers:', error);
+    console.error('❌ Error:', error);
     return NextResponse.json(
       {
         error: 'Failed to fetch swimmer data',
@@ -113,36 +146,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function parseCSVLine(line: string): string[] {
-  const result = [];
-  let current = '';
-  let insideQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    const nextChar = line[i + 1];
-
-    if (char === '"') {
-      if (insideQuotes && nextChar === '"') {
-        current += '"';
-        i++;
-      } else {
-        insideQuotes = !insideQuotes;
-      }
-    } else if (char === ',' && !insideQuotes) {
-      result.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-
-  result.push(current.trim());
-  return result;
-}
-
 function findColumnIndex(headers: string[], searchTerms: string[]): number {
-  return headers.findIndex((header) => {
+  return headers.findIndex((header: string) => {
     const normalized = header.toLowerCase().trim();
     return searchTerms.some((term) => normalized.includes(term.toLowerCase()));
   });

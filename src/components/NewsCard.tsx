@@ -17,7 +17,7 @@ export default function NewsCard({ title, excerpt, category, date, slug }: NewsC
   };
 
   return (
-    <Link href={`/nieuws/${slug}`}>
+    <Link href={`/news/${slug}`}>
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col">
         {/* Image Placeholder */}
         <div className="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm font-medium">
@@ -35,9 +35,9 @@ export default function NewsCard({ title, excerpt, category, date, slug }: NewsC
           <p className="text-sm text-gray-600 mb-4 flex-1 line-clamp-2">
             {excerpt}
           </p>
-          <a href={`/nieuws/${slug}`} className="text-sm font-medium text-blue-900 hover:text-blue-700">
+          <span className="text-sm font-medium text-blue-900 hover:text-blue-700">
             Lees verder →
-          </a>
+          </span>
         </div>
       </div>
     </Link>

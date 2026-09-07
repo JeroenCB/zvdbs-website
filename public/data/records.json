@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "Jelle Roks",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 25,
+    "time": "0:11.98",
+    "date": "29-11-2019",
+    "location": "Rhenen"
+  },
+  {
+    "id": 2,
+    "name": "Jelle Roks",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:25.62",
+    "date": "17-12-2011",
+    "location": "Amsterdam"
+  },
+  {
+    "id": 3,
+    "name": "Jelle Roks",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 100,
+    "time": "0:57.11",
+    "date": "12-05-2018",
+    "location": "Rotterdam"
+  },
+  {
+    "id": 4,
+    "name": "Jelle Roks",
+    "category": "Heren",
+    "stroke": "Rugslag",
+    "distance": 50,
+    "time": "0:29.45",
+    "date": "15-03-2022",
+    "location": "Houten"
+  },
+  {
+    "id": 5,
+    "name": "Jelle Roks",
+    "category": "Heren",
+    "stroke": "Schoolslag",
+    "distance": 50,
+    "time": "0:33.22",
+    "date": "22-04-2021",
+    "location": "Tiel"
+  },
+  {
+    "id": 6,
+    "name": "Debby Nieboer",
+    "category": "Dames",
+    "stroke": "Vrijeslag",
+    "distance": 25,
+    "time": "0:13.67",
+    "date": "02-12-2016",
+    "location": "Rhenen"
+  },
+  {
+    "id": 7,
+    "name": "Debby Nieboer",
+    "category": "Dames",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:29.12",
+    "date": "15-05-2018",
+    "location": "Utrecht"
+  },
+  {
+    "id": 8,
+    "name": "Rosanne Diepeveen",
+    "category": "Dames",
+    "stroke": "Vrijeslag",
+    "distance": 100,
+    "time": "1:04.80",
+    "date": "01-12-2019",
+    "location": "Culemborg"
+  },
+  {
+    "id": 9,
+    "name": "Rosanne Diepeveen",
+    "category": "Dames",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:29.34",
+    "date": "18-05-2021",
+    "location": "Veenendaal"
+  },
+  {
+    "id": 10,
+    "name": "Marcel Stalenhoef",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 100,
+    "time": "0:58.44",
+    "date": "10-10-2023",
+    "location": "Wageningen"
+  },
+  {
+    "id": 11,
+    "name": "Marcel Stalenhoef",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:26.89",
+    "date": "14-04-2022",
+    "location": "Utrecht"
+  },
+  {
+    "id": 12,
+    "name": "Tom van Daalen",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 200,
+    "time": "2:05.34",
+    "date": "05-11-2024",
+    "location": "Driebergen"
+  },
+  {
+    "id": 13,
+    "name": "Tom van Daalen",
+    "category": "Heren",
+    "stroke": "Schoolslag",
+    "distance": 50,
+    "time": "0:35.67",
+    "date": "12-03-2022",
+    "location": "Houten"
+  },
+  {
+    "id": 14,
+    "name": "Erik van Dijk",
+    "category": "Heren",
+    "stroke": "Wisselslag",
+    "distance": 100,
+    "time": "1:08.45",
+    "date": "18-02-2024",
+    "location": "Ede"
+  },
+  {
+    "id": 15,
+    "name": "Paul van Daalen",
+    "category": "Heren",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:27.56",
+    "date": "18-10-2024",
+    "location": "Barneveld"
+  },
+  {
+    "id": 16,
+    "name": "Michelle Diepeveen",
+    "category": "Dames",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:30.12",
+    "date": "04-07-2024",
+    "location": "Rhenen"
+  },
+  {
+    "id": 17,
+    "name": "Joie Bakker",
+    "category": "JO14",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:32.45",
+    "date": "29-06-2022",
+    "location": "Rhenen"
+  },
+  {
+    "id": 18,
+    "name": "Jikke de Vries",
+    "category": "JO14",
+    "stroke": "Vrijeslag",
+    "distance": 50,
+    "time": "0:33.78",
+    "date": "15-06-2024",
+    "location": "Wageningen"
+  },
+  {
+    "id": 19,
+    "name": "Carlijn Smit",
+    "category": "JO14",
+    "stroke": "Schoolslag",
+    "distance": 50,
+    "time": "0:38.92",
+    "date": "12-05-2024",
+    "location": "Wageningen"
+  },
+  {
+    "id": 20,
+    "name": "Julia Hendrikx",
+    "category": "JO14",
+    "stroke": "Rugslag",
+    "distance": 50,
+    "time": "0:36.45",
+    "date": "16-12-2023",
+    "location": "Veenendaal"
+  }
+]

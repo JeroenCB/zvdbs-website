@@ -10,6 +10,7 @@ interface Tijd {
 }
 
 interface Swimmer {
+  id: string;
   naam: string;
   lid: boolean | null;
   wedstrijdnummer: boolean | null;
@@ -330,7 +331,7 @@ export default function StatistiekenPage() {
                     <ul className="sm:hidden space-y-2">
                       {zichtbaar.map((s) => (
                         <li
-                          key={s.naam}
+                          key={s.id}
                           className="border border-gray-200 rounded-lg p-3"
                         >
                           <div className="flex justify-between items-start gap-3">
@@ -377,7 +378,7 @@ export default function StatistiekenPage() {
                         <tbody>
                           {zichtbaar.map((s) => (
                             <tr
-                              key={s.naam}
+                              key={s.id}
                               className="border-b border-gray-100 hover:bg-gray-50"
                             >
                               <td className="py-2 pr-3 text-gray-400">

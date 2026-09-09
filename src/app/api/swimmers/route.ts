@@ -23,6 +23,7 @@ export const revalidate = 600;
 const RANGE = "'Adelskalender'!A4:AS1000";
 
 const IDX = {
+  sheetId: 1,
   naam: 2,
   afstandStart: 5,
   afstandEnd: 27,
@@ -85,10 +86,13 @@ export async function GET() {
 
     const swimmers: Swimmer[] = [];
 
-    // Unieke sleutel per rij. NIET het ID uit kolom B: dat hoeft de browser
-    // niet te weten. Namen zijn niet uniek (er staan dubbele registraties in
-    // de sheet), dus de naam kan hiervoor niet gebruikt worden.
-    let volgnummer = 0;
+    // Kolom B bevat sinds de opschoning een uniek ID per zwemmer. Dat is de
+    // sleutel: die verschuift niet als er rijen worden ingevoegd of gesorteerd.
+    // Namen kunnen niet dienen als sleutel, want die komen dubbel voor
+    // (zwemmers die als kind lid waren en jaren later opnieuw).
+    const gezien = new Map<string, number>();
+    const dubbeleIds: string[] = [];
+    let zonderId = 0;
 
     for (let r = 1; r < rows.length; r++) {
       const row = rows[r];
@@ -113,8 +117,26 @@ export async function GET() {
         if ((parseDutchNumber(row[i]) ?? 0) > 0) gezwommen++;
       }
 
+      // Valt het ID weg, dan pakken we het rijnummer. Liever een werkende
+      // pagina met een minder stabiele sleutel dan een crash.
+      const ruwId = (row[IDX.sheetId] || '').toString().trim();
+      let id: string;
+      if (ruwId) {
+        const aantal = (gezien.get(ruwId) || 0) + 1;
+        gezien.set(ruwId, aantal);
+        if (aantal > 1) {
+          dubbeleIds.push(ruwId);
+          id = `zw-${ruwId}-${aantal}`;
+        } else {
+          id = `zw-${ruwId}`;
+        }
+      } else {
+        zonderId++;
+        id = `rij-${r}`;
+      }
+
       swimmers.push({
-        id: `zw-${++volgnummer}`,
+        id,
         naam,
         lid: normalizeJaNee(row[IDX.lid]),
         wedstrijdnummer: normalizeJaNee(row[IDX.wedstrijdnummer]),
@@ -145,10 +167,25 @@ export async function GET() {
       if (s.ck2 !== null) s.rang = ++rang;
     }
 
+    // Signaleert stil databederf: dubbele of ontbrekende ID's in de sheet.
+    // Zonder deze controle merk je dat pas doordat de pagina raar doet.
+    const waarschuwingen: string[] = [];
+    if (dubbeleIds.length > 0) {
+      const uniek = [...new Set(dubbeleIds)];
+      waarschuwingen.push(
+        `${uniek.length} ID('s) komen meer dan een keer voor in kolom B: ${uniek.join(', ')}`
+      );
+    }
+    if (zonderId > 0) {
+      waarschuwingen.push(`${zonderId} zwemmer(s) hebben geen ID in kolom B`);
+    }
+
     return NextResponse.json({
       success: true,
       count: swimmers.length,
       inKlassement: rang,
+      idsUniek: waarschuwingen.length === 0,
+      waarschuwingen,
       afstanden: afstanden.map(({ key, label }) => ({ key, label })),
       swimmers,
       lastFetched: new Date().toISOString(),

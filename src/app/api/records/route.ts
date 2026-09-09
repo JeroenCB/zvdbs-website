@@ -18,6 +18,17 @@ const SLAGEN = [
 
 const COL = { categorie: 0, afstand: 1, naam: 2, tijd: 3, datum: 4, plaats: 5 };
 
+interface ClubRecord {
+  id: string;
+  slag: string;
+  categorie: string;
+  afstand: string;
+  naam: string;
+  tijd: string;
+  datum: string;
+  plaats: string;
+}
+
 /** Vaste volgorde: jongens, meisjes, volwassenen. Bepaalt de sortering in de UI. */
 const CATEGORIE_VOLGORDE = [
   'JO08', 'JO10', 'JO12', 'JO14', 'JO16', 'JO18', 'Heren',
@@ -29,7 +40,7 @@ export async function GET() {
     const ranges = SLAGEN.map((s) => `'${s.tab}'!A1:F300`);
     const resultaten = await batchGetRanges(ranges);
 
-    const records = [];
+    const records: ClubRecord[] = [];
 
     for (let i = 0; i < SLAGEN.length; i++) {
       const slag = SLAGEN[i];

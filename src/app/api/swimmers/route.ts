@@ -40,6 +40,27 @@ const IDX = {
 /** Scores >= 999 zijn placeholders ("999,99" = geen geldig klassement). */
 const PLACEHOLDER_MIN = 999;
 
+interface Tijd {
+  display: string;
+  seconden: number | null;
+}
+
+interface Swimmer {
+  id: string;
+  naam: string;
+  lid: boolean | null;
+  wedstrijdnummer: boolean | null;
+  wedstrijden: number;
+  ck1: number | null;
+  ck2: number | null;
+  ck3: number | null;
+  adelskalender: number | null;
+  gezwommen: number;
+  totaalAfstanden: number;
+  tijden: Record<string, Tijd>;
+  rang: number | null;
+}
+
 /** Aantal afstanden dat meetelt voor het klassement. */
 const AANTAL_KLASSEMENTSAFSTANDEN = 9;
 
@@ -62,7 +83,12 @@ export async function GET() {
       if (label) afstanden.push({ key: slug(label), label, idx: i });
     }
 
-    const swimmers = [];
+    const swimmers: Swimmer[] = [];
+
+    // Unieke sleutel per rij. NIET het ID uit kolom B: dat hoeft de browser
+    // niet te weten. Namen zijn niet uniek (er staan dubbele registraties in
+    // de sheet), dus de naam kan hiervoor niet gebruikt worden.
+    let volgnummer = 0;
 
     for (let r = 1; r < rows.length; r++) {
       const row = rows[r];
@@ -75,7 +101,7 @@ export async function GET() {
       // in de UI, maar echt afwezig in de data die de browser ontvangt.
       // -------------------------------------------------------------------
 
-      const tijden: Record<string, { display: string; seconden: number | null }> = {};
+      const tijden: Record<string, Tijd> = {};
       for (const a of afstanden) {
         const display = (row[a.idx] || '').toString().trim();
         if (display) tijden[a.key] = { display, seconden: timeToSeconds(display) };
@@ -88,6 +114,7 @@ export async function GET() {
       }
 
       swimmers.push({
+        id: `zw-${++volgnummer}`,
         naam,
         lid: normalizeJaNee(row[IDX.lid]),
         wedstrijdnummer: normalizeJaNee(row[IDX.wedstrijdnummer]),
@@ -99,7 +126,7 @@ export async function GET() {
         gezwommen,
         totaalAfstanden: AANTAL_KLASSEMENTSAFSTANDEN,
         tijden,
-        rang: null as number | null,
+        rang: null,
       });
     }
 

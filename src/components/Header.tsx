@@ -30,6 +30,9 @@ export default function Header() {
             <Link href="/news" className="text-gray-600 hover:text-gray-900">
               Nieuws
             </Link>
+	    <Link href="/clubrecords" className="text-gray-600 hover:text-gray-900">
+  	      Clubrecords
+	    </Link>
             <Link href="/statistieken" className="text-gray-600 hover:text-gray-900">
               Statistieken
             </Link>

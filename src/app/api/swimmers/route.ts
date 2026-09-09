@@ -1,159 +1,170 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import {
+  batchGetRanges,
+  parseDutchNumber,
+  timeToSeconds,
+} from '@/lib/google-sheets';
 
-interface Swimmer {
-  [key: string]: any;
-  points?: number;
-}
+// Ververst maximaal 1x per 10 minuten. Ruim binnen de gratis Google-quota.
+export const revalidate = 600;
 
-export async function GET(request: NextRequest) {
+/**
+ * Tabblad Adelskalender. Koprij = RIJ 4, data vanaf rij 5.
+ *
+ * A(0)  volgnr        B(1)  ID           C(2)  Naam
+ * D(3)  Geslacht      E(4)  Geb.jr.      <- PRIVACY: worden NIET doorgegeven
+ * F(5) t/m AB(27)     afstanden
+ * AC(28) C.K. 1       AD(29) C.K. 2      AE(30) C.K. 3
+ * AF(31) Adelskalender
+ * AG(32) lid          AH(33) Aantal wedstrijden   AI(34) Wedstrijdnummer
+ * AJ(35) t/m AR(43)   gewicht per klassementsafstand (0 = niet gezwommen)
+ * AS(44)              som van die gewichten (max 28 = alle 9 gezwommen)
+ */
+const RANGE = "'Adelskalender'!A4:AS1000";
+
+const IDX = {
+  naam: 2,
+  afstandStart: 5,
+  afstandEnd: 27,
+  ck1: 28,
+  ck2: 29,
+  ck3: 30,
+  adelskalender: 31,
+  lid: 32,
+  wedstrijden: 33,
+  wedstrijdnummer: 34,
+  gewichtStart: 35,
+  gewichtEnd: 43,
+} as const;
+
+/** Scores >= 999 zijn placeholders ("999,99" = geen geldig klassement). */
+const PLACEHOLDER_MIN = 999;
+
+/** Aantal afstanden dat meetelt voor het klassement. */
+const AANTAL_KLASSEMENTSAFSTANDEN = 9;
+
+export async function GET() {
   try {
-    const sheetId = process.env.GOOGLE_SHEETS_ID;
-    const gid = process.env.GOOGLE_SHEETS_GID;
+    const [rows] = await batchGetRanges([RANGE]);
 
-    if (!sheetId || !gid) {
+    if (!rows || rows.length < 2) {
       return NextResponse.json(
-        { error: 'Google Sheets ID or GID not configured' },
-        { status: 500 }
+        { success: false, error: `Geen data gevonden in bereik ${RANGE}` },
+        { status: 502 }
       );
     }
 
-    console.log('📊 Fetching CSV from Google Sheets...');
+    const headerRow = rows[0];
 
-    // CSV export URL - works for public sheets
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
-    console.log('CSV URL:', csvUrl);
-
-    const response = await fetch(csvUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      },
-    });
-
-    if (!response.ok) {
-      console.error('❌ Fetch failed:', response.status, response.statusText);
-      return NextResponse.json(
-        {
-          error: `Failed to fetch Google Sheet: ${response.statusText}`,
-          hint: 'Sheet must be public or shared (Anyone with the link can view)',
-          csvUrl: csvUrl,
-        },
-        { status: response.status }
-      );
+    const afstanden: { key: string; label: string; idx: number }[] = [];
+    for (let i = IDX.afstandStart; i <= IDX.afstandEnd; i++) {
+      const label = (headerRow[i] || '').toString().replace(/\s+/g, ' ').trim();
+      if (label) afstanden.push({ key: slug(label), label, idx: i });
     }
 
-    const csvText = await response.text();
+    const swimmers = [];
 
-    if (!csvText || csvText.length < 10) {
-      console.error('❌ Empty CSV response');
-      return NextResponse.json(
-        { error: 'No data received from Google Sheet', csvLength: csvText.length },
-        { status: 400 }
-      );
-    }
+    for (let r = 1; r < rows.length; r++) {
+      const row = rows[r];
+      const naam = (row[IDX.naam] || '').toString().trim();
+      if (!naam) continue;
 
-    // Parse CSV
-    const lines = csvText.trim().split('\n');
-    if (lines.length < 2) {
-      return NextResponse.json({ error: 'No data rows in sheet' }, { status: 400 });
-    }
+      // --- PRIVACY -------------------------------------------------------
+      // Kolom D (geslacht) en E (geboortejaar) worden hier weggegooid en
+      // komen dus niet in de netwerkresponse terecht. Niet alleen verborgen
+      // in de UI, maar echt afwezig in de data die de browser ontvangt.
+      // -------------------------------------------------------------------
 
-    const headers = parseCSVLine(lines[0]);
-    console.log('✅ Headers found:', headers.length, 'columns');
-    console.log('First 10 headers:', headers.slice(0, 10));
-
-    // Find column indices
-    const colA = findColumnIndex(headers, ['a', 'naam', 'name', 'persoon']);
-    const colAD = findColumnIndex(headers, ['ad', 'ck', 'ck 2', 'c.k. 2', 'adelskalender']);
-    const colB = findColumnIndex(headers, ['b', 'categorie', 'category']);
-
-    console.log('✅ Column indices:', { colA, colB, colAD });
-
-    // Parse swimmers
-    const swimmers: Swimmer[] = [];
-    for (let i = 1; i < lines.length; i++) {
-      const cells = parseCSVLine(lines[i]);
-      const nameCell = colA >= 0 ? cells[colA] : cells[0];
-
-      if (!nameCell || nameCell.trim() === '') continue;
-
-      const swimmer: Swimmer = {};
-
-      headers.forEach((header: string, idx: number) => {
-        const key = header.toLowerCase().trim().replace(/\s+/g, '_');
-        swimmer[key] = cells[idx] || '';
-      });
-
-      if (colAD >= 0 && cells[colAD]) {
-        swimmer.points = parseFloat(cells[colAD]) || 0;
+      const tijden: Record<string, { display: string; seconden: number | null }> = {};
+      for (const a of afstanden) {
+        const display = (row[a.idx] || '').toString().trim();
+        if (display) tijden[a.key] = { display, seconden: timeToSeconds(display) };
       }
 
-      swimmers.push(swimmer);
+      // Tel hoeveel van de 9 klassementsafstanden daadwerkelijk gezwommen zijn.
+      let gezwommen = 0;
+      for (let i = IDX.gewichtStart; i <= IDX.gewichtEnd; i++) {
+        if ((parseDutchNumber(row[i]) ?? 0) > 0) gezwommen++;
+      }
+
+      swimmers.push({
+        naam,
+        lid: normalizeJaNee(row[IDX.lid]),
+        wedstrijdnummer: normalizeJaNee(row[IDX.wedstrijdnummer]),
+        wedstrijden: parseDutchNumber(row[IDX.wedstrijden]) ?? 0,
+        ck1: cleanScore(row[IDX.ck1]),
+        ck2: cleanScore(row[IDX.ck2]),
+        ck3: cleanScore(row[IDX.ck3]),
+        adelskalender: cleanScore(row[IDX.adelskalender]),
+        gezwommen,
+        totaalAfstanden: AANTAL_KLASSEMENTSAFSTANDEN,
+        tijden,
+        rang: null as number | null,
+      });
     }
 
-    // Sort by points
+    // Standaardsortering: C.K. 2 oplopend. Lager = beter.
+    // Zwemmers zonder geldige C.K. 2 hebben geen klassementspositie en gaan
+    // onderaan, alfabetisch, zodat ze wel vindbaar blijven.
     swimmers.sort((a, b) => {
-      const aPoints = typeof a.points === 'number' ? a.points : 0;
-      const bPoints = typeof b.points === 'number' ? b.points : 0;
-      return bPoints - aPoints;
+      if (a.ck2 === null && b.ck2 === null) return a.naam.localeCompare(b.naam, 'nl');
+      if (a.ck2 === null) return 1;
+      if (b.ck2 === null) return -1;
+      return a.ck2 - b.ck2;
     });
 
-    console.log(`✅ Loaded ${swimmers.length} swimmers`);
+    let rang = 0;
+    for (const s of swimmers) {
+      if (s.ck2 !== null) s.rang = ++rang;
+    }
 
     return NextResponse.json({
       success: true,
       count: swimmers.length,
-      swimmers: swimmers.slice(0, 100),
-      allSwimmers: swimmers,
-      headers: headers.slice(0, 50),
-      columnAD: colAD,
-      columnA: colA,
-      columnB: colB,
+      inKlassement: rang,
+      afstanden: afstanden.map(({ key, label }) => ({ key, label })),
+      swimmers,
       lastFetched: new Date().toISOString(),
-      source: 'Google Sheets CSV Export (Public)',
+      source: 'Google Sheets API (service account, prive sheet)',
     });
   } catch (error) {
-    console.error('❌ Error:', error);
+    const message = error instanceof Error ? error.message : 'Onbekende fout';
+    console.error('[api/swimmers]', message);
     return NextResponse.json(
-      {
-        error: 'Failed to fetch swimmer data',
-        details: error instanceof Error ? error.message : 'Unknown error',
-      },
+      { success: false, error: message, hint: diagnose(message) },
       { status: 500 }
     );
   }
 }
 
-function parseCSVLine(line: string): string[] {
-  const result = [];
-  let current = '';
-  let insideQuotes = false;
-
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    const nextChar = line[i + 1];
-
-    if (char === '"') {
-      if (insideQuotes && nextChar === '"') {
-        current += '"';
-        i++;
-      } else {
-        insideQuotes = !insideQuotes;
-      }
-    } else if (char === ',' && !insideQuotes) {
-      result.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-
-  result.push(current.trim());
-  return result;
+function cleanScore(value: unknown): number | null {
+  const n = parseDutchNumber(value);
+  if (n === null || n >= PLACEHOLDER_MIN) return null;
+  return n;
 }
 
-function findColumnIndex(headers: string[], searchTerms: string[]): number {
-  return headers.findIndex((header: string) => {
-    const normalized = header.toLowerCase().trim();
-    return searchTerms.some((term) => normalized.includes(term.toLowerCase()));
-  });
+function normalizeJaNee(value: unknown): boolean | null {
+  const s = (value ?? '').toString().trim().toLowerCase();
+  if (s === 'ja') return true;
+  if (s === 'nee') return false;
+  return null;
+}
+
+function slug(label: string): string {
+  return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
+function diagnose(message: string): string {
+  if (message.includes('not supported for this document'))
+    return 'GOOGLE_SHEET_ID wijst naar een geupload Excel-bestand. Het ID van een native Sheet telt 44 tekens.';
+  if (message.includes('has not been used in project'))
+    return 'De Google Sheets API staat uit. Schakel hem in via de link in het foutbericht.';
+  if (message.includes('403'))
+    return 'Geen toegang. Deel de Sheet met het service account (rol: Lezer).';
+  if (message.includes('404')) return 'Sheet niet gevonden. Controleer GOOGLE_SHEET_ID.';
+  if (message.includes('Unable to parse range'))
+    return 'Het tabblad heet niet exact "Adelskalender". Controleer de tabbladnaam.';
+  if (message.includes('invalid_grant') || message.includes('DECODER'))
+    return 'De private key is niet correct opgeslagen. Plak de volledige waarde inclusief BEGIN/END regels.';
+  return 'Zie het foutbericht hierboven.';
 }

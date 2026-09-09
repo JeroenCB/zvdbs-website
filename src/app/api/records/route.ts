@@ -35,6 +35,18 @@ const CATEGORIE_VOLGORDE = [
   'MO08', 'MO10', 'MO12', 'MO14', 'MO16', 'MO18', 'Dames',
 ];
 
+function diagnose(message: string): string {
+  if (message.includes('ontbreekt'))
+    return 'Een omgevingsvariabele is niet ingesteld. Controleer in Vercel onder Settings > Environment Variables of GOOGLE_SHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL en GOOGLE_PRIVATE_KEY er alle drie staan met Production aangevinkt, en doe daarna een Redeploy.';
+  if (message.includes('Unable to parse range'))
+    return 'Een van de tabbladen heet niet zoals verwacht. Controleer: Vlinderslag, Rugcrawl, Schoolslag, Borstcrawl, Wisselslag.';
+  if (message.includes('has not been used in project'))
+    return 'De Google Sheets API staat uit in je Cloud-project.';
+  if (message.includes('403'))
+    return 'Geen toegang. Deel de Sheet met het service account (rol: Lezer).';
+  return message;
+}
+
 export async function GET() {
   try {
     const ranges = SLAGEN.map((s) => `'${s.tab}'!A1:F300`);
@@ -99,9 +111,7 @@ export async function GET() {
       {
         success: false,
         error: message,
-        hint: message.includes('Unable to parse range')
-          ? 'Een van de tabbladen heet niet zoals verwacht. Controleer: Vlinderslag, Rugcrawl, Schoolslag, Borstcrawl, Wisselslag.'
-          : 'Zie het foutbericht hierboven.',
+        hint: diagnose(message),
       },
       { status: 500 }
     );

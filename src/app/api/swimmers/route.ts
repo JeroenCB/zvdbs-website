@@ -182,6 +182,8 @@ function slug(label: string): string {
 }
 
 function diagnose(message: string): string {
+  if (message.includes('ontbreekt'))
+    return 'Een omgevingsvariabele is niet ingesteld. Controleer in Vercel onder Settings > Environment Variables of GOOGLE_SHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL en GOOGLE_PRIVATE_KEY er alle drie staan met Production aangevinkt, en doe daarna een Redeploy.';
   if (message.includes('not supported for this document'))
     return 'GOOGLE_SHEET_ID wijst naar een geupload Excel-bestand. Het ID van een native Sheet telt 44 tekens.';
   if (message.includes('has not been used in project'))
@@ -193,5 +195,5 @@ function diagnose(message: string): string {
     return 'Het tabblad heet niet exact "Adelskalender". Controleer de tabbladnaam.';
   if (message.includes('invalid_grant') || message.includes('DECODER'))
     return 'De private key is niet correct opgeslagen. Plak de volledige waarde inclusief BEGIN/END regels.';
-  return 'Zie het foutbericht hierboven.';
+  return message;
 }

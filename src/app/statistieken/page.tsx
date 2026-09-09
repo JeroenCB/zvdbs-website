@@ -198,7 +198,7 @@ export default function StatistiekenPage() {
                   <div className="grid gap-3 sm:grid-cols-3">
                     {podium.map((s, i) => (
                       <div
-                        key={s.naam}
+                        key={s.id}
                         className="bg-white border border-gray-200 rounded-lg p-4"
                       >
                         <div className="text-2xl mb-1">

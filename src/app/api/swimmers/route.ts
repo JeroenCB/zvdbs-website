@@ -25,6 +25,7 @@ const RANGE = "'Adelskalender'!A4:AS1000";
 const IDX = {
   sheetId: 1,
   naam: 2,
+  geslacht: 3,
   afstandStart: 5,
   afstandEnd: 27,
   ck1: 28,
@@ -65,8 +66,16 @@ interface Swimmer {
 /** Aantal afstanden dat meetelt voor het klassement. */
 const AANTAL_KLASSEMENTSAFSTANDEN = 9;
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    // Optioneel filter op geslacht: ?geslacht=m of ?geslacht=v.
+    // Kolom D wordt alleen HIER, server-side, gebruikt om te filteren.
+    // De waarde zelf wordt nooit op een Swimmer-object gezet en komt dus
+    // niet in de JSON-response terecht (zelfde privacyregel als voorheen).
+    const geslachtFilterRuw = new URL(request.url).searchParams.get('geslacht');
+    const geslachtFilter =
+      geslachtFilterRuw === 'm' || geslachtFilterRuw === 'v' ? geslachtFilterRuw : null;
+
     const [rows] = await batchGetRanges([RANGE]);
 
     if (!rows || rows.length < 2) {
@@ -94,16 +103,23 @@ export async function GET() {
     const dubbeleIds: string[] = [];
     let zonderId = 0;
 
+    // Geslacht per zwemmer-id, alleen voor server-side filtering. Wordt aan
+    // het eind gebruikt en daarna nergens in de response opgenomen.
+    const geslachtById = new Map<string, 'm' | 'v' | null>();
+
     for (let r = 1; r < rows.length; r++) {
       const row = rows[r];
       const naam = (row[IDX.naam] || '').toString().trim();
       if (!naam) continue;
 
       // --- PRIVACY -------------------------------------------------------
-      // Kolom D (geslacht) en E (geboortejaar) worden hier weggegooid en
-      // komen dus niet in de netwerkresponse terecht. Niet alleen verborgen
-      // in de UI, maar echt afwezig in de data die de browser ontvangt.
+      // Kolom D (geslacht) en E (geboortejaar) worden nooit op een
+      // Swimmer-object gezet. Geslacht wordt alleen los bijgehouden (zie
+      // geslachtById) om server-side op te filteren; geboortejaar wordt
+      // helemaal niet gelezen. Niet alleen verborgen in de UI, maar echt
+      // afwezig in de data die de browser ontvangt.
       // -------------------------------------------------------------------
+      const geslacht = normalizeGeslacht(row[IDX.geslacht]);
 
       const tijden: Record<string, Tijd> = {};
       for (const a of afstanden) {
@@ -134,6 +150,8 @@ export async function GET() {
         zonderId++;
         id = `rij-${r}`;
       }
+
+      geslachtById.set(id, geslacht);
 
       swimmers.push({
         id,
@@ -167,6 +185,14 @@ export async function GET() {
       if (s.ck2 !== null) s.rang = ++rang;
     }
 
+    // Filter (indien gevraagd) pas NA het bepalen van rang/klassement, zodat
+    // de klassementspositie altijd de officiele positie over alle zwemmers
+    // blijft (ongeacht welk filter er actief staat).
+    const gefilterd = geslachtFilter
+      ? swimmers.filter((s) => geslachtById.get(s.id) === geslachtFilter)
+      : swimmers;
+    const inKlassementGefilterd = gefilterd.filter((s) => s.rang !== null).length;
+
     // Signaleert stil databederf: dubbele of ontbrekende ID's in de sheet.
     // Zonder deze controle merk je dat pas doordat de pagina raar doet.
     const waarschuwingen: string[] = [];
@@ -182,12 +208,13 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      count: swimmers.length,
-      inKlassement: rang,
+      count: gefilterd.length,
+      inKlassement: inKlassementGefilterd,
+      geslachtFilter,
       idsUniek: waarschuwingen.length === 0,
       waarschuwingen,
       afstanden: afstanden.map(({ key, label }) => ({ key, label })),
-      swimmers,
+      swimmers: gefilterd,
       lastFetched: new Date().toISOString(),
       source: 'Google Sheets API (service account, prive sheet)',
     });
@@ -211,6 +238,13 @@ function normalizeJaNee(value: unknown): boolean | null {
   const s = (value ?? '').toString().trim().toLowerCase();
   if (s === 'ja') return true;
   if (s === 'nee') return false;
+  return null;
+}
+
+function normalizeGeslacht(value: unknown): 'm' | 'v' | null {
+  const s = (value ?? '').toString().trim().toLowerCase();
+  if (s === 'm' || s === 'man' || s === 'jongen') return 'm';
+  if (s === 'v' || s === 'vrouw' || s === 'meisje') return 'v';
   return null;
 }
 

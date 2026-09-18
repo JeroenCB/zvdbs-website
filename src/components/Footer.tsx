@@ -24,22 +24,22 @@ export default function Footer() {
             <h3 className="font-semibold text-white mb-4">Informatie</h3>
             <ul className="text-sm space-y-2">
               <li>
-                <Link href="/pages/wie" className="hover:text-white">
+                <Link href="/informatie?tab=wie" className="hover:text-white">
                   Wie zijn wij?
                 </Link>
               </li>
               <li>
-                <Link href="/pages/historie" className="hover:text-white">
-                  Historia
+                <Link href="/informatie?tab=historie" className="hover:text-white">
+                  Historie
                 </Link>
               </li>
               <li>
-                <Link href="/pages/privacy" className="hover:text-white">
+                <Link href="/informatie?tab=privacy" className="hover:text-white">
                   Privacyverklaring
                 </Link>
               </li>
               <li>
-                <Link href="/pages/preventief" className="hover:text-white">
+                <Link href="/informatie?tab=preventief" className="hover:text-white">
                   Preventief beleid
                 </Link>
               </li>

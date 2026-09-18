@@ -21,11 +21,8 @@ export default function Header() {
             <Link href="/membership" className="text-gray-600 hover:text-gray-900">
               Lidmaatschap
             </Link>
-            <Link href="/about" className="text-gray-600 hover:text-gray-900">
-              Over ons
-            </Link>
-            <Link href="/policies" className="text-gray-600 hover:text-gray-900">
-              Beleid
+            <Link href="/informatie" className="text-gray-600 hover:text-gray-900">
+              Informatie
             </Link>
             <Link href="/news" className="text-gray-600 hover:text-gray-900">
               Nieuws

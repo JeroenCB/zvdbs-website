@@ -93,6 +93,7 @@ export default async function Home() {
                     day: 'numeric',
                   })}
                   slug={article.slug}
+                  image={article.image}
                 />
               ))}
             </div>

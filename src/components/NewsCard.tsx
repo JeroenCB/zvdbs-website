@@ -6,6 +6,7 @@ interface NewsCardProps {
   category: string;
   date: string;
   slug: string;
+  image?: string | null;
 }
 
 const GRADIENTS = [
@@ -20,7 +21,7 @@ function gradientFor(slug: string) {
   return GRADIENTS[hash];
 }
 
-export default function NewsCard({ title, excerpt, category, date, slug }: NewsCardProps) {
+export default function NewsCard({ title, excerpt, category, date, slug, image }: NewsCardProps) {
   const categoryLabels: { [key: string]: string } = {
     nieuws: 'Nieuws',
     competitie: 'Competitie',
@@ -31,8 +32,13 @@ export default function NewsCard({ title, excerpt, category, date, slug }: NewsC
   return (
     <Link href={`/news/${slug}`}>
       <div className="bg-white border border-line rounded-2xl overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
-        {/* Image Placeholder */}
-        <div className={`w-full h-40 bg-gradient-to-br ${gradientFor(slug)}`} />
+        {/* Foto uit het artikel, met gradient als terugval als er geen foto is */}
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={image} alt="" className="w-full h-40 object-cover" loading="lazy" />
+        ) : (
+          <div className={`w-full h-40 bg-gradient-to-br ${gradientFor(slug)}`} />
+        )}
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-1">

@@ -35,6 +35,7 @@ export default async function NewsPage() {
                       day: 'numeric',
                     })}
                     slug={article.slug}
+                    image={article.image}
                   />
                 ))}
               </div>

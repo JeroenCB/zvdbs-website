@@ -54,20 +54,15 @@ export default function StatistiekenTab() {
   const [alleenLeden, setAlleenLeden] = useState(false);
   const [sortBy, setSortBy] = useState<SortKey>('ck2');
   const [afstandKey, setAfstandKey] = useState('');
-  // Geslacht filtert server-side (de API leest kolom D, maar geeft die zelf
-  // nooit door), dus deze filter triggert een nieuwe fetch i.p.v. lokaal filteren.
-  const [geslacht, setGeslacht] = useState<'' | 'm' | 'v'>('');
 
   useEffect(() => {
-    laadData(geslacht);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geslacht]);
+    laadData();
+  }, []);
 
-  async function laadData(g: '' | 'm' | 'v') {
+  async function laadData() {
     try {
       setLoading(true);
-      const qs = g ? `?geslacht=${g}` : '';
-      const res = await fetch(`/api/swimmers${qs}`);
+      const res = await fetch('/api/swimmers');
       const data = await res.json();
 
       if (!data.success) {
@@ -129,17 +124,21 @@ export default function StatistiekenTab() {
     return gesorteerd;
   }, [swimmers, zoek, alleenKlassement, alleenLeden, sortBy, afstandKey]);
 
+  const podium = useMemo(
+    () => swimmers.filter((s) => s.rang !== null).slice(0, 3),
+    [swimmers]
+  );
+
   const resetFilters = () => {
     setZoek('');
     setAlleenKlassement(true);
     setAlleenLeden(false);
     setSortBy('ck2');
     setAfstandKey('');
-    setGeslacht('');
   };
 
   const filtersActief =
-    zoek !== '' || !alleenKlassement || alleenLeden || sortBy !== 'ck2' || geslacht !== '';
+    zoek !== '' || !alleenKlassement || alleenLeden || sortBy !== 'ck2';
 
   return (
     <>
@@ -169,7 +168,7 @@ export default function StatistiekenTab() {
             </p>
             <p className="text-red-700 text-sm mt-1">{error}</p>
             <button
-              onClick={() => laadData(geslacht)}
+              onClick={laadData}
               className="mt-2 text-sm font-semibold text-red-900 underline"
             >
               Opnieuw proberen
@@ -186,10 +185,37 @@ export default function StatistiekenTab() {
 
       {!loading && !error && (
         <>
+          {/* Podium */}
+          {podium.length > 0 && (
+            <section className="py-8 px-6 bg-gray-50 border-b border-gray-200">
+              <div className="max-w-6xl mx-auto">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">
+                  Top 3 klassement
+                </h2>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {podium.map((s, i) => (
+                    <div
+                      key={s.id}
+                      className="bg-white border border-gray-200 rounded-lg p-4"
+                    >
+                      <div className="text-2xl mb-1">
+                        {['\u{1F947}', '\u{1F948}', '\u{1F949}'][i]}
+                      </div>
+                      <div className="font-semibold text-gray-900">{s.naam}</div>
+                      <div className="text-sm text-gray-500 mt-1">
+                        C.K. 2: {formatScore(s.ck2)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
           {/* Filters */}
           <section className="py-6 px-6 border-b border-gray-200">
             <div className="max-w-6xl mx-auto space-y-4">
-              <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="zoek"
@@ -205,25 +231,6 @@ export default function StatistiekenTab() {
                     placeholder="Typ een naam..."
                     className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900"
                   />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="geslacht"
-                    className="block text-xs font-medium text-gray-500 mb-1"
-                  >
-                    Geslacht
-                  </label>
-                  <select
-                    id="geslacht"
-                    value={geslacht}
-                    onChange={(e) => setGeslacht(e.target.value as '' | 'm' | 'v')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white text-gray-900"
-                  >
-                    <option value="">Iedereen</option>
-                    <option value="v">Dames</option>
-                    <option value="m">Heren</option>
-                  </select>
                 </div>
 
                 <div>
@@ -340,7 +347,6 @@ export default function StatistiekenTab() {
                                 {formatScore(s.ck2)}
                               </div>
                             )}
-                            <Voortgang s={s} />
                           </div>
                         </div>
                       </li>
@@ -360,8 +366,7 @@ export default function StatistiekenTab() {
                               {afstanden.find((a) => a.key === afstandKey)?.label}
                             </th>
                           )}
-                          <th className="py-2 pr-3 text-right">Wedstrijden</th>
-                          <th className="py-2 text-right">Afstanden</th>
+                          <th className="py-2 text-right">Wedstrijden</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -384,11 +389,8 @@ export default function StatistiekenTab() {
                                 {s.tijden[afstandKey]?.display || '–'}
                               </td>
                             )}
-                            <td className="py-2 pr-3 text-right text-gray-600">
+                            <td className="py-2 text-right text-gray-600">
                               {s.wedstrijden}
-                            </td>
-                            <td className="py-2 text-right">
-                              <Voortgang s={s} />
                             </td>
                           </tr>
                         ))}
@@ -402,22 +404,6 @@ export default function StatistiekenTab() {
         </>
       )}
     </>
-  );
-}
-
-function Voortgang({ s }: { s: Swimmer }) {
-  const compleet = s.gezwommen >= s.totaalAfstanden;
-  return (
-    <span
-      className={`text-xs ${compleet ? 'text-green-700' : 'text-gray-400'}`}
-      title={
-        compleet
-          ? 'Alle klassementsafstanden gezwommen'
-          : `Nog ${s.totaalAfstanden - s.gezwommen} afstand(en) te gaan`
-      }
-    >
-      {s.gezwommen}/{s.totaalAfstanden}
-    </span>
   );
 }
 

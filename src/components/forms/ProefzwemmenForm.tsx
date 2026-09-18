@@ -45,7 +45,7 @@ export default function ProefzwemmenForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded p-6 text-green-800">
+      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800">
         <p className="font-semibold mb-1">Bedankt voor je aanmelding!</p>
         <p className="text-sm">We nemen contact met je op om een proefzwemles in te plannen.</p>
       </div>
@@ -55,7 +55,7 @@ export default function ProefzwemmenForm() {
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="naam" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="naam" className="block text-sm font-medium text-ink mb-2">
           Naam
         </label>
         <input
@@ -63,12 +63,12 @@ export default function ProefzwemmenForm() {
           name="naam"
           type="text"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="Naam van de zwemmer"
         />
       </div>
       <div>
-        <label htmlFor="geboortedatum" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="geboortedatum" className="block text-sm font-medium text-ink mb-2">
           Geboortedatum
         </label>
         <input
@@ -76,11 +76,11 @@ export default function ProefzwemmenForm() {
           name="geboortedatum"
           type="date"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-ink mb-2">
           Email
         </label>
         <input
@@ -88,12 +88,12 @@ export default function ProefzwemmenForm() {
           name="email"
           type="email"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="jouw@email.com"
         />
       </div>
       <div>
-        <label htmlFor="telefoon" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="telefoon" className="block text-sm font-medium text-ink mb-2">
           Telefoonnummer
         </label>
         <input
@@ -101,19 +101,19 @@ export default function ProefzwemmenForm() {
           name="telefoon"
           type="tel"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="06 12345678"
         />
       </div>
       <div>
-        <label htmlFor="opmerkingen" className="block text-sm font-medium text-gray-900 mb-2">
-          Opmerkingen <span className="text-gray-400 font-normal">(optioneel)</span>
+        <label htmlFor="opmerkingen" className="block text-sm font-medium text-ink mb-2">
+          Opmerkingen <span className="text-sub font-normal">(optioneel)</span>
         </label>
         <textarea
           id="opmerkingen"
           name="opmerkingen"
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="Bijvoorbeeld zwemervaring of een voorkeursdag"
         />
       </div>
@@ -127,7 +127,7 @@ export default function ProefzwemmenForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-blue-900 text-white py-2 rounded font-semibold hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-coral text-white py-2.5 rounded-full font-semibold hover:bg-coral-dark disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Aanmelden voor proefzwemmen'}
       </button>

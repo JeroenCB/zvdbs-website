@@ -143,14 +143,14 @@ export default function StatistiekenTab() {
 
   return (
     <>
-      <section className="border-b border-gray-200 py-8 px-6">
+      <section className="border-b border-line py-8 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Statistieken</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-ink mb-2">Statistieken</h1>
+          <p className="text-sub">
             Klassement van alle zwemmers van ZVDBS.
           </p>
           {lastFetched && (
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-xs text-sub mt-2">
               Bijgewerkt:{' '}
               {new Date(lastFetched).toLocaleString('nl-NL', {
                 dateStyle: 'medium',
@@ -180,20 +180,20 @@ export default function StatistiekenTab() {
 
       {loading && (
         <section className="py-16 px-6 text-center">
-          <p className="text-gray-500">Gegevens laden...</p>
+          <p className="text-sub">Gegevens laden...</p>
         </section>
       )}
 
       {!loading && !error && (
         <>
           {/* Filters */}
-          <section className="py-6 px-6 border-b border-gray-200">
+          <section className="py-6 px-6 border-b border-line">
             <div className="max-w-6xl mx-auto space-y-4">
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <label
                     htmlFor="zoek"
-                    className="block text-xs font-medium text-gray-500 mb-1"
+                    className="block text-xs font-medium text-sub mb-1"
                   >
                     Zoek een zwemmer
                   </label>
@@ -203,14 +203,14 @@ export default function StatistiekenTab() {
                     value={zoek}
                     onChange={(e) => setZoek(e.target.value)}
                     placeholder="Typ een naam..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="geslacht"
-                    className="block text-xs font-medium text-gray-500 mb-1"
+                    className="block text-xs font-medium text-sub mb-1"
                   >
                     Geslacht
                   </label>
@@ -218,7 +218,7 @@ export default function StatistiekenTab() {
                     id="geslacht"
                     value={geslacht}
                     onChange={(e) => setGeslacht(e.target.value as '' | 'm' | 'v')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                   >
                     <option value="">Iedereen</option>
                     <option value="v">Dames</option>
@@ -229,7 +229,7 @@ export default function StatistiekenTab() {
                 <div>
                   <label
                     htmlFor="sorteer"
-                    className="block text-xs font-medium text-gray-500 mb-1"
+                    className="block text-xs font-medium text-sub mb-1"
                   >
                     Sorteren op
                   </label>
@@ -237,7 +237,7 @@ export default function StatistiekenTab() {
                     id="sorteer"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortKey)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                   >
                     {SORT_OPTIES.map((o) => (
                       <option key={o.value} value={o.value}>
@@ -252,7 +252,7 @@ export default function StatistiekenTab() {
                 <div>
                   <label
                     htmlFor="afstand"
-                    className="block text-xs font-medium text-gray-500 mb-1"
+                    className="block text-xs font-medium text-sub mb-1"
                   >
                     Welke afstand?
                   </label>
@@ -260,7 +260,7 @@ export default function StatistiekenTab() {
                     id="afstand"
                     value={afstandKey}
                     onChange={(e) => setAfstandKey(e.target.value)}
-                    className="w-full sm:w-64 px-3 py-2 border border-gray-300 rounded text-sm bg-white text-gray-900"
+                    className="w-full sm:w-64 px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                   >
                     <option value="">Kies een afstand...</option>
                     {afstanden.map((a) => (
@@ -273,28 +273,28 @@ export default function StatistiekenTab() {
               )}
 
               <div className="flex flex-wrap gap-x-6 gap-y-2">
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-ink">
                   <input
                     type="checkbox"
                     checked={alleenKlassement}
                     onChange={(e) => setAlleenKlassement(e.target.checked)}
-                    className="rounded border-gray-300"
+                    className="rounded accent-coral border-line"
                   />
                   Alleen zwemmers in het klassement ({inKlassement})
                 </label>
 
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-ink">
                   <input
                     type="checkbox"
                     checked={alleenLeden}
                     onChange={(e) => setAlleenLeden(e.target.checked)}
-                    className="rounded border-gray-300"
+                    className="rounded accent-coral border-line"
                   />
                   Alleen huidige leden
                 </label>
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-gray-500">
+              <div className="flex items-center gap-4 text-xs text-sub">
                 <span>
                   {zichtbaar.length} van {swimmers.length} zwemmers
                 </span>
@@ -311,7 +311,7 @@ export default function StatistiekenTab() {
           <section className="py-8 px-6">
             <div className="max-w-6xl mx-auto">
               {zichtbaar.length === 0 ? (
-                <p className="text-gray-500 text-sm py-8 text-center">
+                <p className="text-sub text-sm py-8 text-center">
                   Geen zwemmers gevonden met deze filters.
                 </p>
               ) : (
@@ -321,22 +321,22 @@ export default function StatistiekenTab() {
                     {zichtbaar.map((s) => (
                       <li
                         key={s.id}
-                        className="border border-gray-200 rounded-lg p-3"
+                        className="border border-line rounded-lg p-3"
                       >
                         <div className="flex justify-between items-start gap-3">
                           <div>
-                            <span className="text-xs text-gray-400">
+                            <span className="text-xs text-sub">
                               {s.rang ? `#${s.rang}` : 'buiten klassement'}
                             </span>
-                            <div className="font-medium text-gray-900">{s.naam}</div>
+                            <div className="font-medium text-ink">{s.naam}</div>
                           </div>
                           <div className="text-right">
                             {sortBy === 'afstand' && afstandKey ? (
-                              <div className="font-mono text-sm text-gray-900">
+                              <div className="font-mono text-sm text-ink">
                                 {s.tijden[afstandKey]?.display || '–'}
                               </div>
                             ) : (
-                              <div className="font-mono text-sm text-gray-900">
+                              <div className="font-mono text-sm text-ink">
                                 {formatScore(s.ck2)}
                               </div>
                             )}
@@ -350,7 +350,7 @@ export default function StatistiekenTab() {
                   <div className="hidden sm:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="border-b border-gray-300 text-left text-gray-500 text-xs uppercase">
+                        <tr className="border-b border-line text-left text-sub text-xs uppercase">
                           <th className="py-2 pr-3 w-16">#</th>
                           <th className="py-2 pr-3">Naam</th>
                           <th className="py-2 pr-3 text-right">C.K. 2</th>
@@ -366,23 +366,23 @@ export default function StatistiekenTab() {
                         {zichtbaar.map((s) => (
                           <tr
                             key={s.id}
-                            className="border-b border-gray-100 hover:bg-gray-50"
+                            className="border-b border-line hover:bg-coral-light/40"
                           >
-                            <td className="py-2 pr-3 text-gray-400">
+                            <td className="py-2 pr-3 text-sub">
                               {s.rang ?? '–'}
                             </td>
-                            <td className="py-2 pr-3 font-medium text-gray-900">
+                            <td className="py-2 pr-3 font-medium text-ink">
                               {s.naam}
                             </td>
-                            <td className="py-2 pr-3 text-right font-mono text-gray-900">
+                            <td className="py-2 pr-3 text-right font-mono text-ink">
                               {formatScore(s.ck2)}
                             </td>
                             {sortBy === 'afstand' && afstandKey && (
-                              <td className="py-2 pr-3 text-right font-mono text-gray-900">
+                              <td className="py-2 pr-3 text-right font-mono text-ink">
                                 {s.tijden[afstandKey]?.display || '–'}
                               </td>
                             )}
-                            <td className="py-2 text-right text-gray-600">
+                            <td className="py-2 text-right text-sub">
                               {s.wedstrijden}
                             </td>
                           </tr>

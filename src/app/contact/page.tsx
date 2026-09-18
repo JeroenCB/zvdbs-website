@@ -11,10 +11,10 @@ export default async function ContactPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">
+        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl font-bold mb-2">Contact</h1>
-            <p className="text-blue-100">Neem contact met ons op</p>
+            <p className="text-white/80">Neem contact met ons op</p>
           </div>
         </section>
 
@@ -23,7 +23,7 @@ export default async function ContactPage() {
           <section className="py-12 px-6">
             <div className="max-w-4xl mx-auto">
               <div
-                className="text-gray-700 leading-relaxed space-y-6"
+                className="text-ink/80 leading-relaxed space-y-6"
                 dangerouslySetInnerHTML={{ __html: page.content }}
               />
             </div>
@@ -31,39 +31,39 @@ export default async function ContactPage() {
         )}
 
         {/* Contact Info & Form */}
-        <section className="py-12 px-6 bg-gray-50">
+        <section className="py-12 px-6 bg-white border-t border-line">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Contact Info */}
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-8">Contactgegevens</h2>
+                <h2 className="text-2xl font-semibold text-ink mb-8">Contactgegevens</h2>
                 <div className="space-y-6">
                   <div>
-                    <p className="text-sm text-gray-500 font-medium mb-1">ADRES</p>
-                    <p className="text-gray-900">
+                    <p className="text-sm text-sub font-medium mb-1">ADRES</p>
+                    <p className="text-ink">
                       Groeneweg 58<br />
                       3911 PG Rhenen<br />
                       Nederland
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 font-medium mb-1">EMAIL</p>
-                    <a href="mailto:secretaris@zvdbs.nl" className="text-blue-900 hover:text-blue-700">
+                    <p className="text-sm text-sub font-medium mb-1">EMAIL</p>
+                    <a href="mailto:secretaris@zvdbs.nl" className="text-coral hover:text-coral-dark">
                       secretaris@zvdbs.nl
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 font-medium mb-1">TELEFOON</p>
-                    <p className="text-gray-900">Contact via email of social media</p>
+                    <p className="text-sm text-sub font-medium mb-1">TELEFOON</p>
+                    <p className="text-ink">Contact via email of social media</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 font-medium mb-2">VOLG ONS</p>
+                    <p className="text-sm text-sub font-medium mb-2">VOLG ONS</p>
                     <div className="flex gap-4">
                       <a
                         href="https://facebook.com/zvdbs"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-blue-600"
+                        className="text-sub hover:text-teal"
                       >
                         Facebook
                       </a>
@@ -71,7 +71,7 @@ export default async function ContactPage() {
                         href="https://instagram.com/zvdbs"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-pink-600"
+                        className="text-sub hover:text-coral"
                       >
                         Instagram
                       </a>
@@ -82,7 +82,7 @@ export default async function ContactPage() {
 
               {/* Contact Form */}
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-8">Stuur ons een bericht</h2>
+                <h2 className="text-2xl font-semibold text-ink mb-8">Stuur ons een bericht</h2>
                 <ContactForm />
               </div>
             </div>

@@ -130,7 +130,7 @@ export default function AdminNewsPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 min-h-screen bg-gray-50">
+      <main className="flex-1 min-h-screen bg-cream">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="bg-yellow-50 border border-yellow-200 rounded p-4 mb-8">
             <p className="text-sm text-yellow-800">
@@ -148,14 +148,14 @@ export default function AdminNewsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Form */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">
+              <div className="bg-white rounded-lg shadow-sm border border-line p-8">
+                <h2 className="text-2xl font-bold text-ink mb-8">
                   {isEditing ? 'Artikel bewerken' : 'Nieuw artikel toevoegen'}
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <label className="block text-sm font-semibold text-ink mb-2">
                       Titel *
                     </label>
                     <input
@@ -165,15 +165,15 @@ export default function AdminNewsPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Titel van het artikel"
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-sub mt-1">
                       Slug wordt automatisch gegenereerd: {generateSlug(formData.title) || '—'}
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <label className="block text-sm font-semibold text-ink mb-2">
                       Samenvatting *
                     </label>
                     <textarea
@@ -183,12 +183,12 @@ export default function AdminNewsPage() {
                       required
                       placeholder="Korte samenvatting (max 200 woorden)"
                       rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <label className="block text-sm font-semibold text-ink mb-2">
                       Inhoud *
                     </label>
                     <textarea
@@ -198,15 +198,15 @@ export default function AdminNewsPage() {
                       required
                       placeholder="Volledige artikel inhoud..."
                       rows={10}
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral font-mono text-sm"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-sub mt-1">
                       Je kunt HTML gebruiken voor opmaak (bijv. &lt;p&gt;, &lt;strong&gt;, &lt;img&gt;)
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    <label className="block text-sm font-semibold text-ink mb-2">
                       Auteur *
                     </label>
                     <input
@@ -216,14 +216,14 @@ export default function AdminNewsPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Jouw naam"
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                     />
                   </div>
 
                   <div className="flex gap-4">
                     <button
                       type="submit"
-                      className="flex-1 bg-blue-900 text-white py-3 rounded font-semibold hover:bg-blue-800 transition"
+                      className="flex-1 bg-coral text-white py-3 rounded-full font-semibold hover:bg-coral-dark transition"
                     >
                       {isEditing ? 'Artikel bijwerken' : 'Artikel publiceren'}
                     </button>
@@ -235,7 +235,7 @@ export default function AdminNewsPage() {
                           setEditingId(null);
                           setFormData({ title: '', excerpt: '', content: '', author: '' });
                         }}
-                        className="flex-1 bg-gray-200 text-gray-900 py-3 rounded font-semibold hover:bg-gray-300 transition"
+                        className="flex-1 bg-white text-ink border border-line py-3 rounded-full font-semibold hover:bg-coral-light transition"
                       >
                         Annuleren
                       </button>
@@ -247,20 +247,20 @@ export default function AdminNewsPage() {
 
             {/* Articles List */}
             <div>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-6">Recente artikelen</h3>
+              <div className="bg-white rounded-lg shadow-sm border border-line p-6">
+                <h3 className="text-lg font-bold text-ink mb-6">Recente artikelen</h3>
                 <div className="space-y-4 max-h-[600px] overflow-y-auto">
                   {articles.slice(0, 10).map((article) => (
-                    <div key={article.id} className="border border-gray-200 rounded p-4 text-sm">
-                      <p className="font-semibold text-gray-900 truncate">{article.title}</p>
-                      <p className="text-xs text-gray-500 mt-1">
+                    <div key={article.id} className="border border-line rounded p-4 text-sm">
+                      <p className="font-semibold text-ink truncate">{article.title}</p>
+                      <p className="text-xs text-sub mt-1">
                         {new Date(article.date).toLocaleDateString('nl-NL')}
                       </p>
-                      <p className="text-xs text-gray-600 mt-1">Door {article.author}</p>
+                      <p className="text-xs text-sub mt-1">Door {article.author}</p>
                       <div className="flex gap-2 mt-3">
                         <button
                           onClick={() => handleEdit(article)}
-                          className="text-xs bg-blue-100 text-blue-900 px-2 py-1 rounded hover:bg-blue-200"
+                          className="text-xs bg-teal-light text-teal-dark px-2 py-1 rounded-full hover:bg-teal-light/70"
                         >
                           Bewerk
                         </button>

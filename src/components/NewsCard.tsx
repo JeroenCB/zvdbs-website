@@ -8,6 +8,18 @@ interface NewsCardProps {
   slug: string;
 }
 
+const GRADIENTS = [
+  'from-coral to-coral-dark',
+  'from-teal to-teal-dark',
+  'from-coral-light via-coral to-teal',
+];
+
+function gradientFor(slug: string) {
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) hash = (hash + slug.charCodeAt(i)) % GRADIENTS.length;
+  return GRADIENTS[hash];
+}
+
 export default function NewsCard({ title, excerpt, category, date, slug }: NewsCardProps) {
   const categoryLabels: { [key: string]: string } = {
     nieuws: 'Nieuws',
@@ -18,24 +30,22 @@ export default function NewsCard({ title, excerpt, category, date, slug }: NewsC
 
   return (
     <Link href={`/news/${slug}`}>
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col">
+      <div className="bg-white border border-line rounded-2xl overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
         {/* Image Placeholder */}
-        <div className="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm font-medium">
-          Nieuwsfoto
-        </div>
+        <div className={`w-full h-40 bg-gradient-to-br ${gradientFor(slug)}`} />
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-1">
-          <div className="text-xs text-gray-500 mb-2">
-            {date} • {categoryLabels[category] || category}
+          <div className="text-xs text-teal font-semibold mb-2">
+            {date} · {categoryLabels[category] || category}
           </div>
-          <h3 className="text-base font-semibold text-gray-900 mb-2 line-clamp-2">
+          <h3 className="text-base font-semibold text-ink mb-2 line-clamp-2">
             {title}
           </h3>
-          <p className="text-sm text-gray-600 mb-4 flex-1 line-clamp-2">
+          <p className="text-sm text-sub mb-4 flex-1 line-clamp-2">
             {excerpt}
           </p>
-          <span className="text-sm font-medium text-blue-900 hover:text-blue-700">
+          <span className="text-sm font-semibold text-coral hover:text-coral-dark">
             Lees verder →
           </span>
         </div>

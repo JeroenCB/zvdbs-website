@@ -14,8 +14,8 @@ export default async function MembershipPage() {
         <Header />
         <main className="flex-1">
           <div className="max-w-4xl mx-auto px-6 py-12">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Lidmaatschap</h1>
-            <p className="text-gray-600">Page not found</p>
+            <h1 className="text-3xl font-bold text-ink mb-4">Lidmaatschap</h1>
+            <p className="text-sub">Page not found</p>
           </div>
         </main>
         <Footer />
@@ -28,10 +28,10 @@ export default async function MembershipPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">
+        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl font-bold mb-2">{infoPage?.title ?? 'Lidmaatschap'}</h1>
-            <p className="text-blue-100">Sluit je aan bij onze zwemclub</p>
+            <p className="text-white/80">Sluit je aan bij onze zwemclub</p>
           </div>
         </section>
 
@@ -40,7 +40,7 @@ export default async function MembershipPage() {
           <section className="py-12 px-6">
             <div className="max-w-4xl mx-auto prose prose-lg max-w-none">
               <div
-                className="text-gray-700 leading-relaxed space-y-6"
+                className="text-ink/80 leading-relaxed space-y-6"
                 dangerouslySetInnerHTML={{ __html: infoPage.content }}
               />
             </div>
@@ -48,15 +48,15 @@ export default async function MembershipPage() {
         )}
 
         {/* CTA Section */}
-        <section className="bg-blue-50 border-t border-gray-200 py-12 px-6">
+        <section className="bg-coral-light border-t border-line py-12 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Nog niet zeker?</h2>
-            <p className="text-gray-600 mb-8">
+            <h2 className="text-2xl font-semibold text-ink mb-4">Nog niet zeker?</h2>
+            <p className="text-sub mb-8">
               Kom gratis en vrijblijvend proefzwemmen en ervaar de gezelligheid van de Blauwe Schuur.
             </p>
             <Link
               href="/proefzwemmen"
-              className="inline-block bg-blue-900 text-white px-8 py-3 rounded font-semibold hover:bg-blue-800"
+              className="inline-block bg-coral text-white px-8 py-3 rounded-full font-semibold hover:bg-coral-dark"
             >
               Aanmelden proefzwemmen
             </Link>
@@ -68,11 +68,11 @@ export default async function MembershipPage() {
           <div className="max-w-2xl mx-auto">
             {formIntroPage ? (
               <div
-                className="text-gray-700 leading-relaxed space-y-4 mb-8 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-gray-900"
+                className="text-ink/80 leading-relaxed space-y-4 mb-8 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-ink"
                 dangerouslySetInnerHTML={{ __html: formIntroPage.content }}
               />
             ) : (
-              <h2 className="text-2xl font-semibold text-gray-900 mb-8">Word lid</h2>
+              <h2 className="text-2xl font-semibold text-ink mb-8">Word lid</h2>
             )}
             <LidmaatschapForm />
           </div>

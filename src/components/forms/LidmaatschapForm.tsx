@@ -5,9 +5,10 @@ import { useState, type FormEvent } from 'react';
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 type VoorWie = 'zelf' | 'minderjarige' | '';
 
-const radioLabel = 'flex items-start gap-2 text-sm text-gray-900';
-const fieldLabel = 'block text-sm font-medium text-gray-900 mb-2';
-const textInput = 'w-full px-4 py-2 border border-gray-300 rounded text-gray-900';
+const radioLabel = 'flex items-start gap-2 text-sm text-ink';
+const fieldLabel = 'block text-sm font-medium text-ink mb-2';
+const textInput =
+  'w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral';
 
 export default function LidmaatschapForm() {
   const [status, setStatus] = useState<Status>('idle');
@@ -61,7 +62,7 @@ export default function LidmaatschapForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded p-6 text-green-800">
+      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800">
         <p className="font-semibold mb-1">Bedankt voor je aanmelding!</p>
         <p className="text-sm">De ledenadministratie neemt binnenkort contact met je op.</p>
       </div>
@@ -82,7 +83,7 @@ export default function LidmaatschapForm() {
               required
               checked={voorWie === 'zelf'}
               onChange={() => setVoorWie('zelf')}
-              className="mt-1"
+              className="mt-1 accent-coral"
             />
             Mijzelf (16 jaar of ouder)
           </label>
@@ -94,13 +95,13 @@ export default function LidmaatschapForm() {
               required
               checked={voorWie === 'minderjarige'}
               onChange={() => setVoorWie('minderjarige')}
-              className="mt-1"
+              className="mt-1 accent-coral"
             />
             Een minderjarige (jonger dan 16 jaar)
           </label>
         </div>
         {voorWie === 'minderjarige' && (
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-sub mt-2">
             Vul hieronder de gegevens van de minderjarige in. Dit formulier wordt ingevuld door een ouder of
             verzorger.
           </p>
@@ -126,15 +127,15 @@ export default function LidmaatschapForm() {
         <legend className={fieldLabel}>Geslacht</legend>
         <div className="flex flex-wrap gap-x-6 gap-y-2">
           <label className={radioLabel}>
-            <input type="radio" name="geslacht" value="man" required className="mt-1" />
+            <input type="radio" name="geslacht" value="man" required className="mt-1 accent-coral" />
             Man
           </label>
           <label className={radioLabel}>
-            <input type="radio" name="geslacht" value="vrouw" required className="mt-1" />
+            <input type="radio" name="geslacht" value="vrouw" required className="mt-1 accent-coral" />
             Vrouw
           </label>
           <label className={radioLabel}>
-            <input type="radio" name="geslacht" value="anders" required className="mt-1" />
+            <input type="radio" name="geslacht" value="anders" required className="mt-1 accent-coral" />
             Anders / wil ik niet aangeven
           </label>
         </div>
@@ -190,11 +191,11 @@ export default function LidmaatschapForm() {
         <legend className={fieldLabel}>Aantal trainingen per week</legend>
         <div className="space-y-2">
           <label className={radioLabel}>
-            <input type="radio" name="trainingenPerWeek" value="1" required className="mt-1" />
+            <input type="radio" name="trainingenPerWeek" value="1" required className="mt-1 accent-coral" />
             1 keer per week (woensdag of vrijdag)
           </label>
           <label className={radioLabel}>
-            <input type="radio" name="trainingenPerWeek" value="2" required className="mt-1" />
+            <input type="radio" name="trainingenPerWeek" value="2" required className="mt-1 accent-coral" />
             2 keer per week (woensdag en vrijdag)
           </label>
         </div>
@@ -202,7 +203,7 @@ export default function LidmaatschapForm() {
 
       <div>
         <label htmlFor="opmerkingen" className={fieldLabel}>
-          Opmerkingen <span className="text-gray-400 font-normal">(optioneel)</span>
+          Opmerkingen <span className="text-sub font-normal">(optioneel)</span>
         </label>
         <textarea
           id="opmerkingen"
@@ -214,16 +215,16 @@ export default function LidmaatschapForm() {
       </div>
 
       {/* Lidwordingsverklaring */}
-      <div className="border-t border-gray-200 pt-6">
-        <label className="flex items-start gap-3 text-sm text-gray-900">
-          <input type="checkbox" name="akkoordLidwording" required className="mt-1" />
+      <div className="border-t border-line pt-6">
+        <label className="flex items-start gap-3 text-sm text-ink">
+          <input type="checkbox" name="akkoordLidwording" required className="mt-1 accent-coral" />
           <span>
             Ik verklaar hierbij dat ik lid word van Zwemvereniging de Blauwe Schuur. Ik ken en ga akkoord met de{' '}
             <a
               href="/pages/lidmaatschap"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-900 underline hover:text-blue-700"
+              className="text-coral underline hover:text-coral-dark"
             >
               voorwaarden voor het lidmaatschap en opzegging daarvan
             </a>
@@ -233,61 +234,61 @@ export default function LidmaatschapForm() {
       </div>
 
       {/* Privacy toestemmingen */}
-      <div className="border-t border-gray-200 pt-6 space-y-6">
-        <h3 className="text-sm font-semibold text-gray-900">Toestemmingen</h3>
+      <div className="border-t border-line pt-6 space-y-6">
+        <h3 className="text-sm font-semibold text-ink">Toestemmingen</h3>
 
         <fieldset>
-          <legend className="text-sm text-gray-900 mb-2">
+          <legend className="text-sm text-ink mb-2">
             Ik geef toestemming voor het publiceren van bijvoorbeeld foto&apos;s en/of filmpjes van mij op website
             en social media kanalen
           </legend>
           <div className="flex gap-6">
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingFotos" value="ja" required />
+              <input type="radio" name="toestemmingFotos" value="ja" required className="accent-coral" />
               Ja
             </label>
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingFotos" value="nee" required />
+              <input type="radio" name="toestemmingFotos" value="nee" required className="accent-coral" />
               Nee
             </label>
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="text-sm text-gray-900 mb-2">
+          <legend className="text-sm text-ink mb-2">
             Ik geef toestemming voor het beschikbaar stellen van mijn naam en e-mailadres aan sponsors van de
             vereniging zodat zij mij kunnen benaderen voor aanbiedingen
           </legend>
           <div className="flex gap-6">
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingSponsors" value="ja" required />
+              <input type="radio" name="toestemmingSponsors" value="ja" required className="accent-coral" />
               Ja
             </label>
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingSponsors" value="nee" required />
+              <input type="radio" name="toestemmingSponsors" value="nee" required className="accent-coral" />
               Nee
             </label>
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="text-sm text-gray-900 mb-2">
+          <legend className="text-sm text-ink mb-2">
             Ik geef toestemming voor het opslaan van videomateriaal ter ondersteuning van de zwemtrainingen en
             verbetering van zwemtechniek
           </legend>
           <div className="flex gap-6">
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingVideo" value="ja" required />
+              <input type="radio" name="toestemmingVideo" value="ja" required className="accent-coral" />
               Ja
             </label>
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingVideo" value="nee" required />
+              <input type="radio" name="toestemmingVideo" value="nee" required className="accent-coral" />
               Nee
             </label>
           </div>
         </fieldset>
 
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-sub">
           Mijn toestemming geldt alleen voor de hierboven aangevinkte en beschreven redenen, gegevens en
           organisaties. Voor nieuwe gegevensverwerkingen vraagt de vereniging mij opnieuw om toestemming. Ik mag
           mijn toestemming op elk moment intrekken.
@@ -303,7 +304,7 @@ export default function LidmaatschapForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-blue-900 text-white py-2 rounded font-semibold hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-coral text-white py-2.5 rounded-full font-semibold hover:bg-coral-dark disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Aanmelden als lid'}
       </button>

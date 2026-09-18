@@ -78,14 +78,14 @@ export default function ClubrecordsTab() {
 
   return (
     <>
-      <section className="border-b border-gray-200 py-8 px-6">
+      <section className="border-b border-line py-8 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Clubrecords</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-ink mb-2">Clubrecords</h1>
+          <p className="text-sub">
             Alle clubrecords van ZVDBS, per slag en leeftijdscategorie.
           </p>
           {lastFetched && (
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-xs text-sub mt-2">
               Bijgewerkt:{' '}
               {new Date(lastFetched).toLocaleString('nl-NL', {
                 dateStyle: 'medium',
@@ -115,19 +115,19 @@ export default function ClubrecordsTab() {
 
       {loading && (
         <section className="py-16 px-6 text-center">
-          <p className="text-gray-500">Records laden...</p>
+          <p className="text-sub">Records laden...</p>
         </section>
       )}
 
       {!loading && !error && (
         <>
-          <section className="py-6 px-6 border-b border-gray-200">
+          <section className="py-6 px-6 border-b border-line">
             <div className="max-w-6xl mx-auto space-y-4">
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                   <label
                     htmlFor="zoek"
-                    className="block text-xs font-medium text-gray-500 mb-1"
+                    className="block text-xs font-medium text-sub mb-1"
                   >
                     Zoek een naam
                   </label>
@@ -137,7 +137,7 @@ export default function ClubrecordsTab() {
                     value={zoek}
                     onChange={(e) => setZoek(e.target.value)}
                     placeholder="Typ een naam..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                   />
                 </div>
 
@@ -167,7 +167,7 @@ export default function ClubrecordsTab() {
                 />
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-gray-500">
+              <div className="flex items-center gap-4 text-xs text-sub">
                 <span>
                   {zichtbaar.length} van {records.length} records
                 </span>
@@ -183,7 +183,7 @@ export default function ClubrecordsTab() {
           <section className="py-8 px-6">
             <div className="max-w-6xl mx-auto">
               {zichtbaar.length === 0 ? (
-                <p className="text-gray-500 text-sm py-8 text-center">
+                <p className="text-sub text-sm py-8 text-center">
                   Geen records gevonden met deze filters.
                 </p>
               ) : (
@@ -193,21 +193,21 @@ export default function ClubrecordsTab() {
                     {zichtbaar.map((r) => (
                       <li
                         key={r.id}
-                        className="border border-gray-200 rounded-lg p-3"
+                        className="border border-line rounded-lg p-3"
                       >
                         <div className="flex justify-between items-start gap-3">
                           <div className="min-w-0">
-                            <div className="font-medium text-gray-900 truncate">
+                            <div className="font-medium text-ink truncate">
                               {r.naam}
                             </div>
-                            <div className="text-xs text-gray-500 mt-0.5">
+                            <div className="text-xs text-sub mt-0.5">
                               {r.categorie} &middot; {r.afstand}
                             </div>
-                            <div className="text-xs text-gray-400 mt-0.5">
+                            <div className="text-xs text-sub mt-0.5">
                               {r.datum} {r.plaats && `– ${r.plaats}`}
                             </div>
                           </div>
-                          <div className="font-mono text-sm text-gray-900 whitespace-nowrap">
+                          <div className="font-mono text-sm text-ink whitespace-nowrap">
                             {r.tijd}
                           </div>
                         </div>
@@ -219,7 +219,7 @@ export default function ClubrecordsTab() {
                   <div className="hidden sm:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="border-b border-gray-300 text-left text-gray-500 text-xs uppercase">
+                        <tr className="border-b border-line text-left text-sub text-xs uppercase">
                           <th className="py-2 pr-3">Categorie</th>
                           <th className="py-2 pr-3">Afstand</th>
                           <th className="py-2 pr-3">Naam</th>
@@ -232,18 +232,18 @@ export default function ClubrecordsTab() {
                         {zichtbaar.map((r) => (
                           <tr
                             key={r.id}
-                            className="border-b border-gray-100 hover:bg-gray-50"
+                            className="border-b border-line hover:bg-coral-light/40"
                           >
-                            <td className="py-2 pr-3 text-gray-600">{r.categorie}</td>
-                            <td className="py-2 pr-3 text-gray-600">{r.afstand}</td>
-                            <td className="py-2 pr-3 font-medium text-gray-900">
+                            <td className="py-2 pr-3 text-sub">{r.categorie}</td>
+                            <td className="py-2 pr-3 text-sub">{r.afstand}</td>
+                            <td className="py-2 pr-3 font-medium text-ink">
                               {r.naam}
                             </td>
-                            <td className="py-2 pr-3 text-right font-mono text-gray-900">
+                            <td className="py-2 pr-3 text-right font-mono text-ink">
                               {r.tijd}
                             </td>
-                            <td className="py-2 pr-3 text-gray-500">{r.datum}</td>
-                            <td className="py-2 text-gray-500">{r.plaats}</td>
+                            <td className="py-2 pr-3 text-sub">{r.datum}</td>
+                            <td className="py-2 text-sub">{r.plaats}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -276,14 +276,14 @@ function Dropdown({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-xs font-medium text-gray-500 mb-1">
+      <label htmlFor={id} className="block text-xs font-medium text-sub mb-1">
         {label}
       </label>
       <select
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white text-gray-900"
+        className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
       >
         <option value="">{alles}</option>
         {opties.map((o) => (

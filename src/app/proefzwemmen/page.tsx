@@ -11,10 +11,10 @@ export default async function ProefzwemmenPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">
+        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl font-bold mb-2">Proefzwemmen</h1>
-            <p className="text-blue-100">Kom gratis en vrijblijvend kennismaken met ZVDBS</p>
+            <p className="text-white/80">Kom gratis en vrijblijvend kennismaken met ZVDBS</p>
           </div>
         </section>
 
@@ -23,7 +23,7 @@ export default async function ProefzwemmenPage() {
           <div className="max-w-2xl mx-auto">
             {page && (
               <div
-                className="text-gray-700 leading-relaxed space-y-4 mb-8"
+                className="text-ink/80 leading-relaxed space-y-4 mb-8"
                 dangerouslySetInnerHTML={{ __html: page.content }}
               />
             )}

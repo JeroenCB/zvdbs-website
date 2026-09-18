@@ -43,7 +43,7 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded p-6 text-green-800">
+      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800">
         <p className="font-semibold mb-1">Bedankt voor je bericht!</p>
         <p className="text-sm">We nemen zo snel mogelijk contact met je op.</p>
       </div>
@@ -53,7 +53,7 @@ export default function ContactForm() {
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="naam" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="naam" className="block text-sm font-medium text-ink mb-2">
           Naam
         </label>
         <input
@@ -61,12 +61,12 @@ export default function ContactForm() {
           name="naam"
           type="text"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="Jouw naam"
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-ink mb-2">
           Email
         </label>
         <input
@@ -74,12 +74,12 @@ export default function ContactForm() {
           name="email"
           type="email"
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="jouw@email.com"
         />
       </div>
       <div>
-        <label htmlFor="bericht" className="block text-sm font-medium text-gray-900 mb-2">
+        <label htmlFor="bericht" className="block text-sm font-medium text-ink mb-2">
           Bericht
         </label>
         <textarea
@@ -87,7 +87,7 @@ export default function ContactForm() {
           name="bericht"
           required
           rows={5}
-          className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
           placeholder="Je bericht hier..."
         />
       </div>
@@ -101,11 +101,11 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-blue-900 text-white py-2 rounded font-semibold hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-coral text-white py-2.5 rounded-full font-semibold hover:bg-coral-dark disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Verzenden'}
       </button>
-      <p className="text-xs text-gray-500">We antwoorden meestal binnen 24 uur.</p>
+      <p className="text-xs text-sub">We antwoorden meestal binnen 24 uur.</p>
     </form>
   );
 }

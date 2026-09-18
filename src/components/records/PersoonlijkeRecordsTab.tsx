@@ -80,17 +80,17 @@ export default function PersoonlijkeRecordsTab() {
 
   return (
     <>
-      <section className="border-b border-gray-200 py-8 px-6">
+      <section className="border-b border-line py-8 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-ink mb-2">
             Persoonlijke records
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sub">
             Zoek een zwemmer op en bekijk zijn of haar tijden op de
             klassementsafstanden.
           </p>
           {lastFetched && (
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-xs text-sub mt-2">
               Bijgewerkt:{' '}
               {new Date(lastFetched).toLocaleString('nl-NL', {
                 dateStyle: 'medium',
@@ -120,18 +120,18 @@ export default function PersoonlijkeRecordsTab() {
 
       {loading && (
         <section className="py-16 px-6 text-center">
-          <p className="text-gray-500">Gegevens laden...</p>
+          <p className="text-sub">Gegevens laden...</p>
         </section>
       )}
 
       {!loading && !error && (
         <>
-          <section className="py-6 px-6 border-b border-gray-200">
+          <section className="py-6 px-6 border-b border-line">
             <div className="max-w-6xl mx-auto">
               <div ref={wrapperRef} className="relative max-w-sm">
                 <label
                   htmlFor="zwemmer-zoek"
-                  className="block text-xs font-medium text-gray-500 mb-1"
+                  className="block text-xs font-medium text-sub mb-1"
                 >
                   Zoek een zwemmer
                 </label>
@@ -148,12 +148,12 @@ export default function PersoonlijkeRecordsTab() {
                     onFocus={() => setOpen(true)}
                     placeholder="Typ een naam..."
                     autoComplete="off"
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
                   />
                   {(zoek || geselecteerd) && (
                     <button
                       onClick={wisSelectie}
-                      className="text-xs text-gray-500 underline whitespace-nowrap"
+                      className="text-xs text-sub underline whitespace-nowrap"
                     >
                       Wissen
                     </button>
@@ -161,9 +161,9 @@ export default function PersoonlijkeRecordsTab() {
                 </div>
 
                 {open && zoek.trim() !== '' && !geselecteerd && (
-                  <ul className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-lg max-h-64 overflow-y-auto">
+                  <ul className="absolute z-10 mt-1 w-full bg-white border border-line rounded-lg shadow-lg max-h-64 overflow-y-auto">
                     {suggesties.length === 0 ? (
-                      <li className="px-3 py-2 text-sm text-gray-400">
+                      <li className="px-3 py-2 text-sm text-sub">
                         Geen zwemmer gevonden.
                       </li>
                     ) : (
@@ -171,11 +171,11 @@ export default function PersoonlijkeRecordsTab() {
                         <li key={s.id}>
                           <button
                             onClick={() => kiesZwemmer(s)}
-                            className="w-full text-left px-3 py-2 text-sm text-gray-900 hover:bg-gray-50"
+                            className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-coral-light/40"
                           >
                             {s.naam}
                             {s.rang && (
-                              <span className="text-gray-400"> &middot; #{s.rang}</span>
+                              <span className="text-sub"> &middot; #{s.rang}</span>
                             )}
                           </button>
                         </li>
@@ -190,7 +190,7 @@ export default function PersoonlijkeRecordsTab() {
           <section className="py-8 px-6">
             <div className="max-w-6xl mx-auto">
               {!geselecteerd ? (
-                <p className="text-gray-500 text-sm py-8 text-center">
+                <p className="text-sub text-sm py-8 text-center">
                   Zoek hierboven een zwemmer om diens persoonlijke records te
                   zien.
                 </p>
@@ -222,8 +222,8 @@ function ZwemmerRecords({
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-2 mb-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900">{swimmer.naam}</h2>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h2 className="text-xl font-bold text-ink">{swimmer.naam}</h2>
+          <p className="text-sm text-sub mt-0.5">
             {swimmer.rang ? `#${swimmer.rang} in het klassement` : 'Buiten het klassement'}
             {swimmer.lid === true && ' · lid'}
           </p>
@@ -237,7 +237,7 @@ function ZwemmerRecords({
         <Statkaart label="Adelskalender" waarde={formatScore(swimmer.adelskalender)} />
       </div>
 
-      <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
+      <div className="flex items-center gap-4 text-xs text-sub mb-4">
         <span>
           {swimmer.wedstrijden} wedstrijd{swimmer.wedstrijden === 1 ? '' : 'en'}
         </span>
@@ -247,7 +247,7 @@ function ZwemmerRecords({
       </div>
 
       {gezwommenRijen.length === 0 ? (
-        <p className="text-gray-500 text-sm py-8 text-center">
+        <p className="text-sub text-sm py-8 text-center">
           Nog geen tijden geregistreerd op de klassementsafstanden.
         </p>
       ) : (
@@ -257,12 +257,12 @@ function ZwemmerRecords({
             {rijen.map((r) => (
               <li
                 key={r.key}
-                className="border border-gray-200 rounded-lg p-3 flex justify-between items-center"
+                className="border border-line rounded-lg p-3 flex justify-between items-center"
               >
-                <span className="text-sm text-gray-900">{r.label}</span>
+                <span className="text-sm text-ink">{r.label}</span>
                 <span
                   className={`font-mono text-sm ${
-                    r.tijd ? 'text-gray-900' : 'text-gray-300'
+                    r.tijd ? 'text-ink' : 'text-sub/40'
                   }`}
                 >
                   {r.tijd ? r.tijd.display : '–'}
@@ -275,18 +275,18 @@ function ZwemmerRecords({
           <div className="hidden sm:block overflow-x-auto">
             <table className="w-full text-sm max-w-md">
               <thead>
-                <tr className="border-b border-gray-300 text-left text-gray-500 text-xs uppercase">
+                <tr className="border-b border-line text-left text-sub text-xs uppercase">
                   <th className="py-2 pr-3">Afstand</th>
                   <th className="py-2 text-right">Persoonlijke tijd</th>
                 </tr>
               </thead>
               <tbody>
                 {rijen.map((r) => (
-                  <tr key={r.key} className="border-b border-gray-100">
-                    <td className="py-2 pr-3 text-gray-600">{r.label}</td>
+                  <tr key={r.key} className="border-b border-line">
+                    <td className="py-2 pr-3 text-sub">{r.label}</td>
                     <td
                       className={`py-2 text-right font-mono ${
-                        r.tijd ? 'text-gray-900' : 'text-gray-300'
+                        r.tijd ? 'text-ink' : 'text-sub/40'
                       }`}
                     >
                       {r.tijd ? r.tijd.display : 'nog niet gezwommen'}
@@ -299,7 +299,7 @@ function ZwemmerRecords({
         </>
       )}
 
-      <p className="text-xs text-gray-400 mt-6">
+      <p className="text-xs text-sub mt-6">
         Dit zijn de tijden op de 9 klassementsafstanden uit de Adelskalender.
         Losse tijden op andere afstanden of slagen worden hier nog niet
         bijgehouden.
@@ -310,9 +310,9 @@ function ZwemmerRecords({
 
 function Statkaart({ label, waarde }: { label: string; waarde: string }) {
   return (
-    <div className="border border-gray-200 rounded-lg p-3">
-      <div className="text-xs text-gray-500">{label}</div>
-      <div className="font-mono text-lg text-gray-900 mt-0.5">{waarde}</div>
+    <div className="border border-line rounded-lg p-3">
+      <div className="text-xs text-sub">{label}</div>
+      <div className="font-mono text-lg text-ink mt-0.5">{waarde}</div>
     </div>
   );
 }

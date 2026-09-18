@@ -11,10 +11,10 @@ export default async function NewsPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">
+        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
           <div className="max-w-6xl mx-auto">
             <h1 className="text-4xl font-bold mb-2">Nieuws & Berichten</h1>
-            <p className="text-blue-100">Blijf op de hoogte van het laatste nieuws van ZVDBS</p>
+            <p className="text-white/80">Blijf op de hoogte van het laatste nieuws van ZVDBS</p>
           </div>
         </section>
 
@@ -40,7 +40,7 @@ export default async function NewsPage() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">Nog geen nieuwsartikelen beschikbaar</p>
+                <p className="text-sub text-lg">Nog geen nieuwsartikelen beschikbaar</p>
               </div>
             )}
           </div>

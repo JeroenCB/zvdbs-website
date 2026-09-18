@@ -57,7 +57,7 @@ export default function Footer() {
             <ul className="text-sm space-y-2">
               <li>
                 <Link href="/statistieken" className="hover:text-white">
-                  Statistieken
+                  Records &amp; statistieken
                 </Link>
               </li>
               <li>

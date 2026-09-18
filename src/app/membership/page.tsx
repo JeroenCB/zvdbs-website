@@ -5,9 +5,10 @@ import LidmaatschapForm from '@/components/forms/LidmaatschapForm';
 import { getPage } from '@/lib/pages';
 
 export default async function MembershipPage() {
-  const page = await getPage('lid-worden');
+  const infoPage = await getPage('lidmaatschap');
+  const formIntroPage = await getPage('lid-worden');
 
-  if (!page) {
+  if (!infoPage && !formIntroPage) {
     return (
       <>
         <Header />
@@ -29,20 +30,22 @@ export default async function MembershipPage() {
         {/* Page Header */}
         <section className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-2">{page.title}</h1>
+            <h1 className="text-4xl font-bold mb-2">{infoPage?.title ?? 'Lidmaatschap'}</h1>
             <p className="text-blue-100">Sluit je aan bij onze zwemclub</p>
           </div>
         </section>
 
-        {/* Content */}
-        <section className="py-12 px-6">
-          <div className="max-w-4xl mx-auto prose prose-lg max-w-none">
-            <div
-              className="text-gray-700 leading-relaxed space-y-6"
-              dangerouslySetInnerHTML={{ __html: page.content }}
-            />
-          </div>
-        </section>
+        {/* Content: contributie, opzeggen, etc. */}
+        {infoPage && (
+          <section className="py-12 px-6">
+            <div className="max-w-4xl mx-auto prose prose-lg max-w-none">
+              <div
+                className="text-gray-700 leading-relaxed space-y-6"
+                dangerouslySetInnerHTML={{ __html: infoPage.content }}
+              />
+            </div>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section className="bg-blue-50 border-t border-gray-200 py-12 px-6">
@@ -61,12 +64,16 @@ export default async function MembershipPage() {
         </section>
 
         {/* Aanmeldformulier */}
-        <section className="py-12 px-6">
+        <section id="aanmelden" className="py-12 px-6 scroll-mt-20">
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Word lid</h2>
-            <p className="text-gray-600 mb-8">
-              Weet je het zeker? Meld je hieronder direct aan als lid van ZVDBS.
-            </p>
+            {formIntroPage ? (
+              <div
+                className="text-gray-700 leading-relaxed space-y-4 mb-8 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-gray-900"
+                dangerouslySetInnerHTML={{ __html: formIntroPage.content }}
+              />
+            ) : (
+              <h2 className="text-2xl font-semibold text-gray-900 mb-8">Word lid</h2>
+            )}
             <LidmaatschapForm />
           </div>
         </section>

@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ContactForm from '@/components/forms/ContactForm';
 import { getPage } from '@/lib/pages';
 
 export default async function ContactPage() {
@@ -82,50 +83,7 @@ export default async function ContactPage() {
               {/* Contact Form */}
               <div>
                 <h2 className="text-2xl font-semibold text-gray-900 mb-8">Stuur ons een bericht</h2>
-                <form className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                      Naam
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
-                      placeholder="Jouw naam"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
-                      placeholder="jouw@email.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                      Bericht
-                    </label>
-                    <textarea
-                      required
-                      rows={5}
-                      className="w-full px-4 py-2 border border-gray-300 rounded text-gray-900"
-                      placeholder="Je bericht hier..."
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-900 text-white py-2 rounded font-semibold hover:bg-blue-800"
-                  >
-                    Verzenden
-                  </button>
-                </form>
-                <p className="text-xs text-gray-500 mt-4">
-                  We antwoorden meestal binnen 24 uur.
-                </p>
+                <ContactForm />
               </div>
             </div>
           </div>

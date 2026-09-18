@@ -104,7 +104,7 @@ export default function Footer() {
               Clubkleding
             </Link>
             ,{' '}
-            <Link href="/pages/proef-zwemmen" className="text-blue-300 hover:text-white">
+            <Link href="/proefzwemmen" className="text-blue-300 hover:text-white">
               Proefzwemmen
             </Link>
             ,{' '}

@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import LidmaatschapForm from '@/components/forms/LidmaatschapForm';
 import { getPage } from '@/lib/pages';
 
 export default async function MembershipPage() {
@@ -45,13 +47,27 @@ export default async function MembershipPage() {
         {/* CTA Section */}
         <section className="bg-blue-50 border-t border-gray-200 py-12 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Klaar om lid te worden?</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Nog niet zeker?</h2>
             <p className="text-gray-600 mb-8">
-              Kom gratis proefzwemmen en ervaar de gezelligheid van de Blauwe Schuur.
+              Kom gratis en vrijblijvend proefzwemmen en ervaar de gezelligheid van de Blauwe Schuur.
             </p>
-            <button className="bg-blue-900 text-white px-8 py-3 rounded font-semibold hover:bg-blue-800">
+            <Link
+              href="/proefzwemmen"
+              className="inline-block bg-blue-900 text-white px-8 py-3 rounded font-semibold hover:bg-blue-800"
+            >
               Aanmelden proefzwemmen
-            </button>
+            </Link>
+          </div>
+        </section>
+
+        {/* Aanmeldformulier */}
+        <section className="py-12 px-6">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Word lid</h2>
+            <p className="text-gray-600 mb-8">
+              Weet je het zeker? Meld je hieronder direct aan als lid van ZVDBS.
+            </p>
+            <LidmaatschapForm />
           </div>
         </section>
       </main>

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Tabs, { TabDef } from '@/components/records/Tabs';
+import Tabs, { TabDef } from '@/components/Tabs';
 import ClubrecordsTab from '@/components/records/ClubrecordsTab';
 import StatistiekenTab from '@/components/records/StatistiekenTab';
 import PersoonlijkeRecordsTab from '@/components/records/PersoonlijkeRecordsTab';

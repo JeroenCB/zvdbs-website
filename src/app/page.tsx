@@ -22,10 +22,10 @@ export default async function Home() {
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Link
-                href="/membership"
+                href="/proefzwemmen"
                 className="bg-white text-blue-900 px-8 py-3 rounded font-semibold hover:bg-blue-50"
               >
-                Lid worden
+                Proefzwemmen
               </Link>
               <Link
                 href="/news"

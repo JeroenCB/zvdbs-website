@@ -30,7 +30,7 @@ export default async function PageDetail({ params }: Props) {
             <p className="text-sub mb-8">
               De pagina die je zoekt bestaat niet.
             </p>
-            <Link href="/" className="text-coral hover:text-coral-dark">
+            <Link href="/" className="text-aqua hover:text-aqua-dark">
               ← Terug naar home
             </Link>
           </div>
@@ -45,12 +45,12 @@ export default async function PageDetail({ params }: Props) {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <Link href="/" className="text-white/80 hover:text-white text-sm mb-4 inline-block">
+            <Link href="/" className="text-sub hover:text-aqua-dark text-sm mb-4 inline-block">
               ← Home
             </Link>
-            <h1 className="text-4xl font-bold mb-2">{page.title}</h1>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">{page.title}</h1>
           </div>
         </section>
 
@@ -73,7 +73,7 @@ export default async function PageDetail({ params }: Props) {
                 <Link
                   key={p.id}
                   href={`/pages/${p.slug}`}
-                  className="p-4 border border-line rounded-xl hover:shadow-md hover:border-coral transition text-ink hover:text-coral"
+                  className="p-4 border border-line rounded-xl hover:shadow-md hover:border-aqua transition text-ink hover:text-aqua"
                 >
                   <p className="font-semibold">{p.title}</p>
                 </Link>

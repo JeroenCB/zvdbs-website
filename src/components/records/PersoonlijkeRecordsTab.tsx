@@ -148,7 +148,7 @@ export default function PersoonlijkeRecordsTab() {
                     onFocus={() => setOpen(true)}
                     placeholder="Typ een naam..."
                     autoComplete="off"
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                   />
                   {(zoek || geselecteerd) && (
                     <button
@@ -171,7 +171,7 @@ export default function PersoonlijkeRecordsTab() {
                         <li key={s.id}>
                           <button
                             onClick={() => kiesZwemmer(s)}
-                            className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-coral-light/40"
+                            className="w-full text-left px-3 py-2 text-sm text-ink hover:bg-aqua-light/40"
                           >
                             {s.naam}
                             {s.rang && (

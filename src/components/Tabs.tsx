@@ -30,7 +30,7 @@ export default function Tabs({
                 aria-current={isActive ? 'page' : undefined}
                 className={`whitespace-nowrap py-3 px-1 border-b-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'border-coral text-coral'
+                    ? 'border-aqua text-aqua'
                     : 'border-transparent text-sub hover:text-ink hover:border-line'
                 }`}
               >

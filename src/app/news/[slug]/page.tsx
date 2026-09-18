@@ -29,7 +29,7 @@ export default async function NewsArticlePage({ params }: Props) {
             <p className="text-sub mb-8">
               Het artikel dat u zoekt, bestaat niet.
             </p>
-            <Link href="/news" className="text-coral hover:text-coral-dark">
+            <Link href="/news" className="text-aqua hover:text-aqua-dark">
               ← Terug naar nieuws
             </Link>
           </div>
@@ -52,7 +52,7 @@ export default async function NewsArticlePage({ params }: Props) {
         {/* Article Header */}
         <section className="bg-white border-b border-line py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <Link href="/news" className="text-coral hover:text-coral-dark text-sm mb-4 inline-block">
+            <Link href="/news" className="text-aqua hover:text-aqua-dark text-sm mb-4 inline-block">
               ← Terug naar nieuws
             </Link>
             <h1 className="text-4xl font-bold text-ink mb-4">{article.title}</h1>
@@ -75,7 +75,7 @@ export default async function NewsArticlePage({ params }: Props) {
         </section>
 
         {/* Related Articles CTA */}
-        <section className="bg-coral-light border-t border-line py-12 px-6">
+        <section className="bg-aqua-light border-t border-line py-12 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-semibold text-ink mb-4">Meer nieuws</h2>
             <p className="text-sub mb-8">
@@ -83,7 +83,7 @@ export default async function NewsArticlePage({ params }: Props) {
             </p>
             <Link
               href="/news"
-              className="inline-block bg-coral text-white px-8 py-3 rounded-full font-semibold hover:bg-coral-dark"
+              className="inline-block bg-gradient-to-r from-aqua to-aqua-dark text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-aqua/30"
             >
               Terug naar alle artikelen
             </Link>

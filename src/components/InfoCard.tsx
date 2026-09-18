@@ -9,14 +9,14 @@ interface InfoCardProps {
 export default function InfoCard({ title, description, label, detail, icon }: InfoCardProps) {
   // Support both old and new prop formats
   return (
-    <div className="bg-white border border-line rounded-2xl p-8 text-center hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div className="bg-white border border-line rounded-2xl p-7 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.15)] hover:shadow-[0_24px_44px_-24px_rgba(15,23,42,0.2)] transition-shadow">
       {icon && (
-        <div className="w-14 h-14 rounded-full bg-coral-light flex items-center justify-center text-2xl mx-auto mb-4">
+        <div className="w-12 h-12 rounded-xl bg-aqua-light flex items-center justify-center text-xl mb-4">
           {icon}
         </div>
       )}
       {label && <p className="text-xs text-sub font-medium mb-2">{label}</p>}
-      <h3 className="text-lg font-semibold text-ink mb-2">{title}</h3>
+      <h3 className="text-base font-bold text-ink mb-2">{title}</h3>
       <p className="text-sm text-sub leading-relaxed">{description || detail}</p>
     </div>
   );

@@ -8,7 +8,7 @@ type VoorWie = 'zelf' | 'minderjarige' | '';
 const radioLabel = 'flex items-start gap-2 text-sm text-ink';
 const fieldLabel = 'block text-sm font-medium text-ink mb-2';
 const textInput =
-  'w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral';
+  'w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua';
 
 export default function LidmaatschapForm() {
   const [status, setStatus] = useState<Status>('idle');
@@ -83,7 +83,7 @@ export default function LidmaatschapForm() {
               required
               checked={voorWie === 'zelf'}
               onChange={() => setVoorWie('zelf')}
-              className="mt-1 accent-coral"
+              className="mt-1 accent-aqua"
             />
             Mijzelf (16 jaar of ouder)
           </label>
@@ -95,7 +95,7 @@ export default function LidmaatschapForm() {
               required
               checked={voorWie === 'minderjarige'}
               onChange={() => setVoorWie('minderjarige')}
-              className="mt-1 accent-coral"
+              className="mt-1 accent-aqua"
             />
             Een minderjarige (jonger dan 16 jaar)
           </label>
@@ -127,15 +127,15 @@ export default function LidmaatschapForm() {
         <legend className={fieldLabel}>Geslacht</legend>
         <div className="flex flex-wrap gap-x-6 gap-y-2">
           <label className={radioLabel}>
-            <input type="radio" name="geslacht" value="man" required className="mt-1 accent-coral" />
+            <input type="radio" name="geslacht" value="man" required className="mt-1 accent-aqua" />
             Man
           </label>
           <label className={radioLabel}>
-            <input type="radio" name="geslacht" value="vrouw" required className="mt-1 accent-coral" />
+            <input type="radio" name="geslacht" value="vrouw" required className="mt-1 accent-aqua" />
             Vrouw
           </label>
           <label className={radioLabel}>
-            <input type="radio" name="geslacht" value="anders" required className="mt-1 accent-coral" />
+            <input type="radio" name="geslacht" value="anders" required className="mt-1 accent-aqua" />
             Anders / wil ik niet aangeven
           </label>
         </div>
@@ -191,11 +191,11 @@ export default function LidmaatschapForm() {
         <legend className={fieldLabel}>Aantal trainingen per week</legend>
         <div className="space-y-2">
           <label className={radioLabel}>
-            <input type="radio" name="trainingenPerWeek" value="1" required className="mt-1 accent-coral" />
+            <input type="radio" name="trainingenPerWeek" value="1" required className="mt-1 accent-aqua" />
             1 keer per week (woensdag of vrijdag)
           </label>
           <label className={radioLabel}>
-            <input type="radio" name="trainingenPerWeek" value="2" required className="mt-1 accent-coral" />
+            <input type="radio" name="trainingenPerWeek" value="2" required className="mt-1 accent-aqua" />
             2 keer per week (woensdag en vrijdag)
           </label>
         </div>
@@ -217,14 +217,14 @@ export default function LidmaatschapForm() {
       {/* Lidwordingsverklaring */}
       <div className="border-t border-line pt-6">
         <label className="flex items-start gap-3 text-sm text-ink">
-          <input type="checkbox" name="akkoordLidwording" required className="mt-1 accent-coral" />
+          <input type="checkbox" name="akkoordLidwording" required className="mt-1 accent-aqua" />
           <span>
             Ik verklaar hierbij dat ik lid word van Zwemvereniging de Blauwe Schuur. Ik ken en ga akkoord met de{' '}
             <a
               href="/pages/lidmaatschap"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-coral underline hover:text-coral-dark"
+              className="text-aqua underline hover:text-aqua-dark"
             >
               voorwaarden voor het lidmaatschap en opzegging daarvan
             </a>
@@ -244,11 +244,11 @@ export default function LidmaatschapForm() {
           </legend>
           <div className="flex gap-6">
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingFotos" value="ja" required className="accent-coral" />
+              <input type="radio" name="toestemmingFotos" value="ja" required className="accent-aqua" />
               Ja
             </label>
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingFotos" value="nee" required className="accent-coral" />
+              <input type="radio" name="toestemmingFotos" value="nee" required className="accent-aqua" />
               Nee
             </label>
           </div>
@@ -261,11 +261,11 @@ export default function LidmaatschapForm() {
           </legend>
           <div className="flex gap-6">
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingSponsors" value="ja" required className="accent-coral" />
+              <input type="radio" name="toestemmingSponsors" value="ja" required className="accent-aqua" />
               Ja
             </label>
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingSponsors" value="nee" required className="accent-coral" />
+              <input type="radio" name="toestemmingSponsors" value="nee" required className="accent-aqua" />
               Nee
             </label>
           </div>
@@ -278,11 +278,11 @@ export default function LidmaatschapForm() {
           </legend>
           <div className="flex gap-6">
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingVideo" value="ja" required className="accent-coral" />
+              <input type="radio" name="toestemmingVideo" value="ja" required className="accent-aqua" />
               Ja
             </label>
             <label className={radioLabel}>
-              <input type="radio" name="toestemmingVideo" value="nee" required className="accent-coral" />
+              <input type="radio" name="toestemmingVideo" value="nee" required className="accent-aqua" />
               Nee
             </label>
           </div>
@@ -304,7 +304,7 @@ export default function LidmaatschapForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-coral text-white py-2.5 rounded-full font-semibold hover:bg-coral-dark disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-aqua to-aqua-dark text-white py-3 rounded-xl font-bold shadow-lg shadow-aqua/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Aanmelden als lid'}
       </button>

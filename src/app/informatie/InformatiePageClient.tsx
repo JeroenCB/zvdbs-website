@@ -48,9 +48,9 @@ export default function InformatiePageClient({ pages }: { pages: InformatieTabPa
     <>
       <Header />
       <main className="flex-1">
-        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-2">{huidigePagina.title}</h1>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">{huidigePagina.title}</h1>
           </div>
         </section>
 

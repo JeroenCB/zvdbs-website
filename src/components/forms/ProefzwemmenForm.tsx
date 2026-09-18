@@ -63,7 +63,7 @@ export default function ProefzwemmenForm() {
           name="naam"
           type="text"
           required
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
           placeholder="Naam van de zwemmer"
         />
       </div>
@@ -76,7 +76,7 @@ export default function ProefzwemmenForm() {
           name="geboortedatum"
           type="date"
           required
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
         />
       </div>
       <div>
@@ -88,7 +88,7 @@ export default function ProefzwemmenForm() {
           name="email"
           type="email"
           required
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
           placeholder="jouw@email.com"
         />
       </div>
@@ -101,7 +101,7 @@ export default function ProefzwemmenForm() {
           name="telefoon"
           type="tel"
           required
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
           placeholder="06 12345678"
         />
       </div>
@@ -113,7 +113,7 @@ export default function ProefzwemmenForm() {
           id="opmerkingen"
           name="opmerkingen"
           rows={4}
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
           placeholder="Bijvoorbeeld zwemervaring of een voorkeursdag"
         />
       </div>
@@ -127,7 +127,7 @@ export default function ProefzwemmenForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-coral text-white py-2.5 rounded-full font-semibold hover:bg-coral-dark disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-aqua to-aqua-dark text-white py-3 rounded-xl font-bold shadow-lg shadow-aqua/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Aanmelden voor proefzwemmen'}
       </button>

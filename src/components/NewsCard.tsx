@@ -9,9 +9,9 @@ interface NewsCardProps {
 }
 
 const GRADIENTS = [
-  'from-coral to-coral-dark',
-  'from-teal to-teal-dark',
-  'from-coral-light via-coral to-teal',
+  'from-[#7DD3FC] to-[#0EA5E9]',
+  'from-[#38BDF8] to-[#0891B2]',
+  'from-[#67E8F9] to-[#0EA5E9]',
 ];
 
 function gradientFor(slug: string) {
@@ -36,7 +36,7 @@ export default function NewsCard({ title, excerpt, category, date, slug }: NewsC
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-1">
-          <div className="text-xs text-teal font-semibold mb-2">
+          <div className="text-xs text-aqua font-semibold mb-2">
             {date} · {categoryLabels[category] || category}
           </div>
           <h3 className="text-base font-semibold text-ink mb-2 line-clamp-2">
@@ -45,7 +45,7 @@ export default function NewsCard({ title, excerpt, category, date, slug }: NewsC
           <p className="text-sm text-sub mb-4 flex-1 line-clamp-2">
             {excerpt}
           </p>
-          <span className="text-sm font-semibold text-coral hover:text-coral-dark">
+          <span className="text-sm font-semibold text-aqua hover:text-aqua-dark">
             Lees verder →
           </span>
         </div>

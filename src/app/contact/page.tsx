@@ -11,10 +11,10 @@ export default async function ContactPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-2">Contact</h1>
-            <p className="text-white/80">Neem contact met ons op</p>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">Contact</h1>
+            <p className="text-sub">Neem contact met ons op</p>
           </div>
         </section>
 
@@ -48,7 +48,7 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-sub font-medium mb-1">EMAIL</p>
-                    <a href="mailto:secretaris@zvdbs.nl" className="text-coral hover:text-coral-dark">
+                    <a href="mailto:secretaris@zvdbs.nl" className="text-aqua hover:text-aqua-dark">
                       secretaris@zvdbs.nl
                     </a>
                   </div>
@@ -63,7 +63,7 @@ export default async function ContactPage() {
                         href="https://facebook.com/zvdbs"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sub hover:text-teal"
+                        className="text-sub hover:text-aqua"
                       >
                         Facebook
                       </a>
@@ -71,7 +71,7 @@ export default async function ContactPage() {
                         href="https://instagram.com/zvdbs"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sub hover:text-coral"
+                        className="text-sub hover:text-aqua"
                       >
                         Instagram
                       </a>

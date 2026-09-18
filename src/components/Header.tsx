@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const NAV_LINKS = [
@@ -14,39 +15,36 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname?.startsWith(href));
 
   return (
-    <header className="bg-cream/90 backdrop-blur border-b border-line sticky top-0 z-50">
+    <header className="bg-white/90 backdrop-blur border-b border-line sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 flex-shrink-0" onClick={() => setMenuOpen(false)}>
-            <div className="w-10 h-10 bg-coral rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">DBS</span>
+          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0" onClick={() => setMenuOpen(false)}>
+            <div className="w-9 h-9 rounded-[11px] bg-gradient-to-br from-aqua to-aqua-dark flex items-center justify-center">
+              <span className="text-white font-extrabold text-xs">DBS</span>
             </div>
-            <span className="font-semibold text-ink hidden sm:inline">ZVDBS</span>
+            <span className="font-extrabold text-ink hidden sm:inline tracking-tight">ZVDBS</span>
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex gap-6 text-sm">
-            <Link href="/" className="text-ink hover:text-coral font-medium">
-              Home
-            </Link>
-            <Link href="/membership" className="text-sub hover:text-coral">
-              Lidmaatschap
-            </Link>
-            <Link href="/informatie" className="text-sub hover:text-coral">
-              Informatie
-            </Link>
-            <Link href="/news" className="text-sub hover:text-coral">
-              Nieuws
-            </Link>
-            <Link href="/statistieken" className="text-sub hover:text-coral">
-              Records &amp; statistieken
-            </Link>
-            <Link href="/contact" className="text-sub hover:text-coral">
-              Contact
-            </Link>
+          <nav className="hidden md:flex gap-8 text-sm font-medium">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={
+                  isActive(link.href)
+                    ? 'text-aqua-dark font-bold'
+                    : 'text-[#33475B] hover:text-aqua-dark'
+                }
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -76,7 +74,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="px-2 py-2.5 rounded-lg text-ink hover:bg-coral-light hover:text-coral"
+                className="px-2 py-2.5 rounded-lg text-ink hover:bg-aqua-light hover:text-aqua"
               >
                 {link.label}
               </Link>

@@ -137,7 +137,7 @@ export default function ClubrecordsTab() {
                     value={zoek}
                     onChange={(e) => setZoek(e.target.value)}
                     placeholder="Typ een naam..."
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                   />
                 </div>
 
@@ -232,7 +232,7 @@ export default function ClubrecordsTab() {
                         {zichtbaar.map((r) => (
                           <tr
                             key={r.id}
-                            className="border-b border-line hover:bg-coral-light/40"
+                            className="border-b border-line hover:bg-aqua-light/40"
                           >
                             <td className="py-2 pr-3 text-sub">{r.categorie}</td>
                             <td className="py-2 pr-3 text-sub">{r.afstand}</td>
@@ -283,7 +283,7 @@ function Dropdown({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+        className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
       >
         <option value="">{alles}</option>
         {opties.map((o) => (

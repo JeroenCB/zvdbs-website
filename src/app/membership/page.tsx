@@ -28,10 +28,10 @@ export default async function MembershipPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-2">{infoPage?.title ?? 'Lidmaatschap'}</h1>
-            <p className="text-white/80">Sluit je aan bij onze zwemclub</p>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">{infoPage?.title ?? 'Lidmaatschap'}</h1>
+            <p className="text-sub">Sluit je aan bij onze zwemclub</p>
           </div>
         </section>
 
@@ -48,7 +48,7 @@ export default async function MembershipPage() {
         )}
 
         {/* CTA Section */}
-        <section className="bg-coral-light border-t border-line py-12 px-6">
+        <section className="bg-aqua-light border-t border-line py-12 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-semibold text-ink mb-4">Nog niet zeker?</h2>
             <p className="text-sub mb-8">
@@ -56,7 +56,7 @@ export default async function MembershipPage() {
             </p>
             <Link
               href="/proefzwemmen"
-              className="inline-block bg-coral text-white px-8 py-3 rounded-full font-semibold hover:bg-coral-dark"
+              className="inline-block bg-gradient-to-r from-aqua to-aqua-dark text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-aqua/30"
             >
               Aanmelden proefzwemmen
             </Link>

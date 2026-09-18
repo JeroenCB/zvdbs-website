@@ -203,7 +203,7 @@ export default function StatistiekenTab() {
                     value={zoek}
                     onChange={(e) => setZoek(e.target.value)}
                     placeholder="Typ een naam..."
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                   />
                 </div>
 
@@ -218,7 +218,7 @@ export default function StatistiekenTab() {
                     id="geslacht"
                     value={geslacht}
                     onChange={(e) => setGeslacht(e.target.value as '' | 'm' | 'v')}
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                   >
                     <option value="">Iedereen</option>
                     <option value="v">Dames</option>
@@ -237,7 +237,7 @@ export default function StatistiekenTab() {
                     id="sorteer"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortKey)}
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                   >
                     {SORT_OPTIES.map((o) => (
                       <option key={o.value} value={o.value}>
@@ -260,7 +260,7 @@ export default function StatistiekenTab() {
                     id="afstand"
                     value={afstandKey}
                     onChange={(e) => setAfstandKey(e.target.value)}
-                    className="w-full sm:w-64 px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                    className="w-full sm:w-64 px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                   >
                     <option value="">Kies een afstand...</option>
                     {afstanden.map((a) => (
@@ -278,7 +278,7 @@ export default function StatistiekenTab() {
                     type="checkbox"
                     checked={alleenKlassement}
                     onChange={(e) => setAlleenKlassement(e.target.checked)}
-                    className="rounded accent-coral border-line"
+                    className="rounded accent-aqua border-line"
                   />
                   Alleen zwemmers in het klassement ({inKlassement})
                 </label>
@@ -288,7 +288,7 @@ export default function StatistiekenTab() {
                     type="checkbox"
                     checked={alleenLeden}
                     onChange={(e) => setAlleenLeden(e.target.checked)}
-                    className="rounded accent-coral border-line"
+                    className="rounded accent-aqua border-line"
                   />
                   Alleen huidige leden
                 </label>
@@ -366,7 +366,7 @@ export default function StatistiekenTab() {
                         {zichtbaar.map((s) => (
                           <tr
                             key={s.id}
-                            className="border-b border-line hover:bg-coral-light/40"
+                            className="border-b border-line hover:bg-aqua-light/40"
                           >
                             <td className="py-2 pr-3 text-sub">
                               {s.rang ?? '–'}

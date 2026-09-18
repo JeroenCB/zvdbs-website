@@ -130,7 +130,7 @@ export default function AdminNewsPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 min-h-screen bg-cream">
+      <main className="flex-1 min-h-screen bg-white">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="bg-yellow-50 border border-yellow-200 rounded p-4 mb-8">
             <p className="text-sm text-yellow-800">
@@ -165,7 +165,7 @@ export default function AdminNewsPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Titel van het artikel"
-                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                     />
                     <p className="text-xs text-sub mt-1">
                       Slug wordt automatisch gegenereerd: {generateSlug(formData.title) || '—'}
@@ -183,7 +183,7 @@ export default function AdminNewsPage() {
                       required
                       placeholder="Korte samenvatting (max 200 woorden)"
                       rows={3}
-                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                     />
                   </div>
 
@@ -198,7 +198,7 @@ export default function AdminNewsPage() {
                       required
                       placeholder="Volledige artikel inhoud..."
                       rows={10}
-                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral font-mono text-sm"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua font-mono text-sm"
                     />
                     <p className="text-xs text-sub mt-1">
                       Je kunt HTML gebruiken voor opmaak (bijv. &lt;p&gt;, &lt;strong&gt;, &lt;img&gt;)
@@ -216,14 +216,14 @@ export default function AdminNewsPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Jouw naam"
-                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-coral/40 focus:border-coral"
+                      className="w-full px-4 py-2 border border-line rounded text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
                     />
                   </div>
 
                   <div className="flex gap-4">
                     <button
                       type="submit"
-                      className="flex-1 bg-coral text-white py-3 rounded-full font-semibold hover:bg-coral-dark transition"
+                      className="flex-1 bg-gradient-to-r from-aqua to-aqua-dark text-white py-3 rounded-xl font-bold transition"
                     >
                       {isEditing ? 'Artikel bijwerken' : 'Artikel publiceren'}
                     </button>
@@ -235,7 +235,7 @@ export default function AdminNewsPage() {
                           setEditingId(null);
                           setFormData({ title: '', excerpt: '', content: '', author: '' });
                         }}
-                        className="flex-1 bg-white text-ink border border-line py-3 rounded-full font-semibold hover:bg-coral-light transition"
+                        className="flex-1 bg-white text-ink border border-line py-3 rounded-xl font-bold hover:bg-aqua-light transition"
                       >
                         Annuleren
                       </button>
@@ -260,7 +260,7 @@ export default function AdminNewsPage() {
                       <div className="flex gap-2 mt-3">
                         <button
                           onClick={() => handleEdit(article)}
-                          className="text-xs bg-teal-light text-teal-dark px-2 py-1 rounded-full hover:bg-teal-light/70"
+                          className="text-xs bg-aqua-light text-aqua-dark px-2 py-1 rounded-full hover:bg-aqua-light/70"
                         >
                           Bewerk
                         </button>

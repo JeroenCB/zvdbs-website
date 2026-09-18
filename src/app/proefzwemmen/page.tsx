@@ -11,10 +11,10 @@ export default async function ProefzwemmenPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-gradient-to-br from-teal to-teal-dark text-white py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold mb-2">Proefzwemmen</h1>
-            <p className="text-white/80">Kom gratis en vrijblijvend kennismaken met ZVDBS</p>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">Proefzwemmen</h1>
+            <p className="text-sub">Kom gratis en vrijblijvend kennismaken met ZVDBS</p>
           </div>
         </section>
 

@@ -29,7 +29,7 @@ export default async function MembershipPage() {
       <main className="flex-1">
         {/* Page Header */}
         <section className="bg-aqua-light border-b border-line py-12 px-6 dark:bg-night-bg dark:border-night-line">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight dark:text-night-ink">{infoPage?.title ?? 'Lidmaatschap'}</h1>
             <p className="text-sub dark:text-night-sub">Sluit je aan bij onze zwemclub</p>
           </div>
@@ -38,7 +38,7 @@ export default async function MembershipPage() {
         {/* Content: contributie, opzeggen, etc. */}
         {infoPage && (
           <section className="py-12 px-6">
-            <div className="max-w-2xl mx-auto prose prose-lg max-w-none dark:prose-invert">
+            <div className="max-w-4xl mx-auto">
               <div
                 className="text-ink/80 leading-relaxed space-y-6 dark:text-night-ink/80"
                 dangerouslySetInnerHTML={{ __html: infoPage.content }}
@@ -49,7 +49,7 @@ export default async function MembershipPage() {
 
         {/* CTA Section */}
         <section className="bg-aqua-light border-t border-line py-12 px-6 dark:bg-gradient-to-br dark:from-night-cyan/10 dark:to-night-violet/[0.06] dark:border-night-line">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-semibold text-ink mb-4 dark:text-night-ink">Nog niet zeker?</h2>
             <p className="text-sub mb-8 dark:text-night-sub">
               Kom gratis en vrijblijvend proefzwemmen en ervaar de gezelligheid van de Blauwe Schuur.
@@ -65,7 +65,7 @@ export default async function MembershipPage() {
 
         {/* Aanmeldformulier */}
         <section id="aanmelden" className="py-12 px-6 scroll-mt-20">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {formIntroPage ? (
               <div
                 className="text-ink/80 leading-relaxed space-y-4 mb-8 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-ink dark:text-night-ink/80 dark:[&_h2]:text-night-ink"

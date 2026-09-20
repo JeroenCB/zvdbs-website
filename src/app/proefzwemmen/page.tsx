@@ -20,7 +20,7 @@ export default async function ProefzwemmenPage() {
 
         {/* Content + Form */}
         <section className="py-12 px-6">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {page && (
               <div
                 className="text-ink/80 leading-relaxed space-y-4 mb-8 dark:text-night-ink/80"

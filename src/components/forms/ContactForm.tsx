@@ -43,9 +43,9 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800">
+      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800 dark:bg-night-cyan/10 dark:border-night-cyan/25 dark:text-night-cyan">
         <p className="font-semibold mb-1">Bedankt voor je bericht!</p>
-        <p className="text-sm">We nemen zo snel mogelijk contact met je op.</p>
+        <p className="text-sm dark:text-night-cyan/90">We nemen zo snel mogelijk contact met je op.</p>
       </div>
     );
   }
@@ -53,7 +53,7 @@ export default function ContactForm() {
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="naam" className="block text-sm font-medium text-ink mb-2">
+        <label htmlFor="naam" className="block text-sm font-medium text-ink mb-2 dark:text-night-ink">
           Naam
         </label>
         <input
@@ -61,12 +61,12 @@ export default function ContactForm() {
           name="naam"
           type="text"
           required
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-white/[0.04] dark:border-night-line dark:text-night-ink dark:placeholder:text-night-sub/60 dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
           placeholder="Jouw naam"
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-ink mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-ink mb-2 dark:text-night-ink">
           Email
         </label>
         <input
@@ -74,12 +74,12 @@ export default function ContactForm() {
           name="email"
           type="email"
           required
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-white/[0.04] dark:border-night-line dark:text-night-ink dark:placeholder:text-night-sub/60 dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
           placeholder="jouw@email.com"
         />
       </div>
       <div>
-        <label htmlFor="bericht" className="block text-sm font-medium text-ink mb-2">
+        <label htmlFor="bericht" className="block text-sm font-medium text-ink mb-2 dark:text-night-ink">
           Bericht
         </label>
         <textarea
@@ -87,13 +87,13 @@ export default function ContactForm() {
           name="bericht"
           required
           rows={5}
-          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+          className="w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-white/[0.04] dark:border-night-line dark:text-night-ink dark:placeholder:text-night-sub/60 dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
           placeholder="Je bericht hier..."
         />
       </div>
 
       {status === 'error' && (
-        <p className="text-sm text-red-600" role="alert">
+        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
           {errorMessage}
         </p>
       )}
@@ -101,11 +101,11 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-gradient-to-r from-aqua to-aqua-dark text-white py-3 rounded-xl font-bold shadow-lg shadow-aqua/30 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-aqua to-aqua-dark dark:from-night-cyan dark:to-night-violet text-white dark:text-night-bg py-3 rounded-xl font-bold shadow-lg shadow-aqua/30 dark:shadow-night-cyan/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Verzenden'}
       </button>
-      <p className="text-xs text-sub">We antwoorden meestal binnen 24 uur.</p>
+      <p className="text-xs text-sub dark:text-night-sub">We antwoorden meestal binnen 24 uur.</p>
     </form>
   );
 }

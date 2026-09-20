@@ -11,10 +11,10 @@ export default async function NewsPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="bg-aqua-light border-b border-line py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6 dark:bg-night-bg dark:border-night-line">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">Nieuws & Berichten</h1>
-            <p className="text-sub">Blijf op de hoogte van het laatste nieuws van ZVDBS</p>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight dark:text-night-ink">Nieuws & Berichten</h1>
+            <p className="text-sub dark:text-night-sub">Blijf op de hoogte van het laatste nieuws van ZVDBS</p>
           </div>
         </section>
 
@@ -41,7 +41,7 @@ export default async function NewsPage() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-sub text-lg">Nog geen nieuwsartikelen beschikbaar</p>
+                <p className="text-sub dark:text-night-sub text-lg">Nog geen nieuwsartikelen beschikbaar</p>
               </div>
             )}
           </div>

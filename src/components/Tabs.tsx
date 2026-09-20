@@ -18,7 +18,7 @@ export default function Tabs({
   maxWidthClassName?: string;
 }) {
   return (
-    <div className="border-b border-line px-6 bg-white">
+    <div className="border-b border-line px-6 bg-white dark:border-night-line dark:bg-night-bg">
       <div className={`${maxWidthClassName} mx-auto`}>
         <nav className="flex gap-6 -mb-px overflow-x-auto" aria-label="Tabs">
           {tabs.map((t) => {
@@ -30,8 +30,8 @@ export default function Tabs({
                 aria-current={isActive ? 'page' : undefined}
                 className={`whitespace-nowrap py-3 px-1 border-b-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'border-aqua text-aqua'
-                    : 'border-transparent text-sub hover:text-ink hover:border-line'
+                    ? 'border-aqua text-aqua dark:border-night-cyan dark:text-night-cyan'
+                    : 'border-transparent text-sub hover:text-ink hover:border-line dark:text-night-sub dark:hover:text-night-ink dark:hover:border-night-line'
                 }`}
               >
                 {t.label}

@@ -143,14 +143,14 @@ export default function StatistiekenTab() {
 
   return (
     <>
-      <section className="border-b border-line py-8 px-6">
+      <section className="border-b border-line py-8 px-6 dark:border-night-line">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-ink mb-2">Statistieken</h1>
-          <p className="text-sub">
+          <h1 className="text-3xl font-bold text-ink mb-2 dark:text-night-ink">Statistieken</h1>
+          <p className="text-sub dark:text-night-sub">
             Klassement van alle zwemmers van ZVDBS.
           </p>
           {lastFetched && (
-            <p className="text-xs text-sub mt-2">
+            <p className="text-xs text-sub mt-2 dark:text-night-sub">
               Bijgewerkt:{' '}
               {new Date(lastFetched).toLocaleString('nl-NL', {
                 dateStyle: 'medium',
@@ -162,15 +162,15 @@ export default function StatistiekenTab() {
       </section>
 
       {error && (
-        <section className="py-4 px-6 bg-red-50 border-b border-red-200">
+        <section className="py-4 px-6 bg-red-50 border-b border-red-200 dark:bg-red-950/30 dark:border-red-900/50">
           <div className="max-w-6xl mx-auto">
-            <p className="text-red-800 text-sm font-medium">
+            <p className="text-red-800 text-sm font-medium dark:text-red-300">
               Gegevens konden niet worden geladen
             </p>
-            <p className="text-red-700 text-sm mt-1">{error}</p>
+            <p className="text-red-700 text-sm mt-1 dark:text-red-400">{error}</p>
             <button
               onClick={() => laadData(geslacht)}
-              className="mt-2 text-sm font-semibold text-red-900 underline"
+              className="mt-2 text-sm font-semibold text-red-900 underline dark:text-red-300"
             >
               Opnieuw proberen
             </button>
@@ -180,20 +180,20 @@ export default function StatistiekenTab() {
 
       {loading && (
         <section className="py-16 px-6 text-center">
-          <p className="text-sub">Gegevens laden...</p>
+          <p className="text-sub dark:text-night-sub">Gegevens laden...</p>
         </section>
       )}
 
       {!loading && !error && (
         <>
           {/* Filters */}
-          <section className="py-6 px-6 border-b border-line">
+          <section className="py-6 px-6 border-b border-line dark:border-night-line">
             <div className="max-w-6xl mx-auto space-y-4">
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <label
                     htmlFor="zoek"
-                    className="block text-xs font-medium text-sub mb-1"
+                    className="block text-xs font-medium text-sub mb-1 dark:text-night-sub"
                   >
                     Zoek een zwemmer
                   </label>
@@ -203,14 +203,14 @@ export default function StatistiekenTab() {
                     value={zoek}
                     onChange={(e) => setZoek(e.target.value)}
                     placeholder="Typ een naam..."
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-white/[0.04] dark:border-night-line dark:text-night-ink dark:placeholder:text-night-sub/60 dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="geslacht"
-                    className="block text-xs font-medium text-sub mb-1"
+                    className="block text-xs font-medium text-sub mb-1 dark:text-night-sub"
                   >
                     Geslacht
                   </label>
@@ -218,7 +218,7 @@ export default function StatistiekenTab() {
                     id="geslacht"
                     value={geslacht}
                     onChange={(e) => setGeslacht(e.target.value as '' | 'm' | 'v')}
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-night-panel dark:border-night-line dark:text-night-ink dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
                   >
                     <option value="">Iedereen</option>
                     <option value="v">Dames</option>
@@ -229,7 +229,7 @@ export default function StatistiekenTab() {
                 <div>
                   <label
                     htmlFor="sorteer"
-                    className="block text-xs font-medium text-sub mb-1"
+                    className="block text-xs font-medium text-sub mb-1 dark:text-night-sub"
                   >
                     Sorteren op
                   </label>
@@ -237,7 +237,7 @@ export default function StatistiekenTab() {
                     id="sorteer"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortKey)}
-                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+                    className="w-full px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-night-panel dark:border-night-line dark:text-night-ink dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
                   >
                     {SORT_OPTIES.map((o) => (
                       <option key={o.value} value={o.value}>
@@ -252,7 +252,7 @@ export default function StatistiekenTab() {
                 <div>
                   <label
                     htmlFor="afstand"
-                    className="block text-xs font-medium text-sub mb-1"
+                    className="block text-xs font-medium text-sub mb-1 dark:text-night-sub"
                   >
                     Welke afstand?
                   </label>
@@ -260,7 +260,7 @@ export default function StatistiekenTab() {
                     id="afstand"
                     value={afstandKey}
                     onChange={(e) => setAfstandKey(e.target.value)}
-                    className="w-full sm:w-64 px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua"
+                    className="w-full sm:w-64 px-3 py-2 border border-line rounded-lg text-sm bg-white text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-night-panel dark:border-night-line dark:text-night-ink dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan"
                   >
                     <option value="">Kies een afstand...</option>
                     {afstanden.map((a) => (
@@ -273,7 +273,7 @@ export default function StatistiekenTab() {
               )}
 
               <div className="flex flex-wrap gap-x-6 gap-y-2">
-                <label className="flex items-center gap-2 text-sm text-ink">
+                <label className="flex items-center gap-2 text-sm text-ink dark:text-night-ink">
                   <input
                     type="checkbox"
                     checked={alleenKlassement}
@@ -283,7 +283,7 @@ export default function StatistiekenTab() {
                   Alleen zwemmers in het klassement ({inKlassement})
                 </label>
 
-                <label className="flex items-center gap-2 text-sm text-ink">
+                <label className="flex items-center gap-2 text-sm text-ink dark:text-night-ink">
                   <input
                     type="checkbox"
                     checked={alleenLeden}
@@ -294,7 +294,7 @@ export default function StatistiekenTab() {
                 </label>
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-sub">
+              <div className="flex items-center gap-4 text-xs text-sub dark:text-night-sub">
                 <span>
                   {zichtbaar.length} van {swimmers.length} zwemmers
                 </span>
@@ -311,7 +311,7 @@ export default function StatistiekenTab() {
           <section className="py-8 px-6">
             <div className="max-w-6xl mx-auto">
               {zichtbaar.length === 0 ? (
-                <p className="text-sub text-sm py-8 text-center">
+                <p className="text-sub text-sm py-8 text-center dark:text-night-sub">
                   Geen zwemmers gevonden met deze filters.
                 </p>
               ) : (
@@ -321,22 +321,22 @@ export default function StatistiekenTab() {
                     {zichtbaar.map((s) => (
                       <li
                         key={s.id}
-                        className="border border-line rounded-lg p-3"
+                        className="border border-line rounded-lg p-3 dark:border-night-line"
                       >
                         <div className="flex justify-between items-start gap-3">
                           <div>
-                            <span className="text-xs text-sub">
+                            <span className="text-xs text-sub dark:text-night-sub">
                               {s.rang ? `#${s.rang}` : 'buiten klassement'}
                             </span>
-                            <div className="font-medium text-ink">{s.naam}</div>
+                            <div className="font-medium text-ink dark:text-night-ink">{s.naam}</div>
                           </div>
                           <div className="text-right">
                             {sortBy === 'afstand' && afstandKey ? (
-                              <div className="font-mono text-sm text-ink">
+                              <div className="font-mono text-sm text-ink dark:text-night-ink">
                                 {s.tijden[afstandKey]?.display || '–'}
                               </div>
                             ) : (
-                              <div className="font-mono text-sm text-ink">
+                              <div className="font-mono text-sm text-ink dark:text-night-ink">
                                 {formatScore(s.ck2)}
                               </div>
                             )}
@@ -350,7 +350,7 @@ export default function StatistiekenTab() {
                   <div className="hidden sm:block overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="border-b border-line text-left text-sub text-xs uppercase">
+                        <tr className="border-b border-line text-left text-sub text-xs uppercase dark:border-night-line dark:text-night-sub">
                           <th className="py-2 pr-3 w-16">#</th>
                           <th className="py-2 pr-3">Naam</th>
                           <th className="py-2 pr-3 text-right">C.K. 2</th>
@@ -366,23 +366,23 @@ export default function StatistiekenTab() {
                         {zichtbaar.map((s) => (
                           <tr
                             key={s.id}
-                            className="border-b border-line hover:bg-aqua-light/40"
+                            className="border-b border-line hover:bg-aqua-light/40 dark:border-night-line dark:hover:bg-white/[0.04]"
                           >
-                            <td className="py-2 pr-3 text-sub">
+                            <td className="py-2 pr-3 text-sub dark:text-night-sub">
                               {s.rang ?? '–'}
                             </td>
-                            <td className="py-2 pr-3 font-medium text-ink">
+                            <td className="py-2 pr-3 font-medium text-ink dark:text-night-ink">
                               {s.naam}
                             </td>
-                            <td className="py-2 pr-3 text-right font-mono text-ink">
+                            <td className="py-2 pr-3 text-right font-mono text-ink dark:text-night-ink">
                               {formatScore(s.ck2)}
                             </td>
                             {sortBy === 'afstand' && afstandKey && (
-                              <td className="py-2 pr-3 text-right font-mono text-ink">
+                              <td className="py-2 pr-3 text-right font-mono text-ink dark:text-night-ink">
                                 {s.tijden[afstandKey]?.display || '–'}
                               </td>
                             )}
-                            <td className="py-2 text-right text-sub">
+                            <td className="py-2 text-right text-sub dark:text-night-sub">
                               {s.wedstrijden}
                             </td>
                           </tr>

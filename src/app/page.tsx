@@ -15,30 +15,30 @@ export default async function Home() {
 
         {/* Hero Section */}
         <section className="relative overflow-hidden px-6 pt-20 pb-28 text-center">
-          <div className="pointer-events-none absolute -top-56 -right-40 w-[560px] h-[560px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(14,165,233,0.16),rgba(6,182,212,0)_70%)]" />
-          <div className="pointer-events-none absolute -bottom-64 -left-44 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(6,182,212,0.14),rgba(6,182,212,0)_70%)]" />
+          <div className="pointer-events-none absolute -top-56 -right-40 w-[560px] h-[560px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(14,165,233,0.16),rgba(6,182,212,0)_70%)] dark:bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.16),rgba(34,211,238,0)_70%)]" />
+          <div className="pointer-events-none absolute -bottom-64 -left-44 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(6,182,212,0.14),rgba(6,182,212,0)_70%)] dark:bg-[radial-gradient(circle_at_30%_30%,rgba(129,140,248,0.14),rgba(129,140,248,0)_70%)]" />
 
           <div className="relative max-w-2xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-ink mb-5 leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-ink mb-5 leading-tight tracking-tight dark:text-night-ink">
               Welkom bij{' '}
-              <span className="bg-gradient-to-r from-aqua to-aqua-dark bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-aqua to-aqua-dark dark:from-night-cyan dark:to-night-violet bg-clip-text text-transparent">
                 ZVDBS
               </span>
             </h1>
-            <p className="text-lg text-sub mb-10 leading-relaxed max-w-xl mx-auto">
+            <p className="text-lg text-sub mb-10 leading-relaxed max-w-xl mx-auto dark:text-night-sub">
               Zwemvereniging de Blauwe Schuur — competities, trainingen en gezelligheid, het hele
               jaar door.
             </p>
             <div className="flex gap-3.5 flex-wrap justify-center">
               <Link
                 href="/proefzwemmen"
-                className="bg-gradient-to-r from-aqua to-aqua-dark text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-aqua/30 hover:shadow-xl hover:shadow-aqua/40 transition-shadow"
+                className="bg-gradient-to-r from-aqua to-aqua-dark dark:from-night-cyan dark:to-night-violet text-white dark:text-night-bg px-7 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-aqua/30 hover:shadow-xl hover:shadow-aqua/40 dark:shadow-night-cyan/30 dark:hover:shadow-night-cyan/40 transition-shadow"
               >
                 Proefzwemmen
               </Link>
               <Link
                 href="/news"
-                className="bg-white border border-line text-ink px-7 py-3.5 rounded-xl font-bold text-sm hover:border-aqua hover:text-aqua-dark"
+                className="bg-white border border-line text-ink px-7 py-3.5 rounded-xl font-bold text-sm hover:border-aqua hover:text-aqua-dark dark:bg-white/[0.04] dark:border-night-line dark:text-night-ink dark:hover:border-night-cyan dark:hover:text-night-cyan dark:backdrop-blur-sm"
               >
                 Laatste nieuws
               </Link>
@@ -95,24 +95,24 @@ export default async function Home() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-white border border-line rounded-2xl">
-              <p className="text-sub">Nog geen nieuws beschikbaar</p>
+            <div className="text-center py-12 bg-white border border-line rounded-2xl dark:bg-white/[0.03] dark:border-night-line">
+              <p className="text-sub dark:text-night-sub">Nog geen nieuws beschikbaar</p>
             </div>
           )}
         </section>
 
         {/* CTA Section */}
         <section className="max-w-5xl mx-auto px-6 pb-20">
-          <div className="bg-aqua-light rounded-3xl py-16 px-6 text-center">
-            <h2 className="text-3xl font-extrabold text-ink mb-3.5 tracking-tight">
+          <div className="bg-aqua-light rounded-3xl py-16 px-6 text-center dark:bg-gradient-to-br dark:from-night-cyan/10 dark:to-night-violet/[0.06] dark:border dark:border-night-line">
+            <h2 className="text-3xl font-extrabold text-ink mb-3.5 tracking-tight dark:text-night-ink">
               Klaar om lid te worden?
             </h2>
-            <p className="text-sub mb-8 text-base">
+            <p className="text-sub mb-8 text-base dark:text-night-sub">
               Kom gratis proefzwemmen en ervaar de gezelligheid van de Blauwe Schuur.
             </p>
             <Link
               href="/membership"
-              className="inline-block bg-gradient-to-r from-aqua to-aqua-dark text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-aqua/30"
+              className="inline-block bg-gradient-to-r from-aqua to-aqua-dark dark:from-night-cyan dark:to-night-violet text-white dark:text-night-bg px-8 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-aqua/30 dark:shadow-night-cyan/30"
             >
               Meer informatie
             </Link>

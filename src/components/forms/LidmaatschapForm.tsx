@@ -5,10 +5,10 @@ import { useState, type FormEvent } from 'react';
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 type VoorWie = 'zelf' | 'minderjarige' | '';
 
-const radioLabel = 'flex items-start gap-2 text-sm text-ink';
-const fieldLabel = 'block text-sm font-medium text-ink mb-2';
+const radioLabel = 'flex items-start gap-2 text-sm text-ink dark:text-night-ink';
+const fieldLabel = 'block text-sm font-medium text-ink mb-2 dark:text-night-ink';
 const textInput =
-  'w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua';
+  'w-full px-4 py-2 border border-line rounded-lg text-ink focus:outline-none focus:ring-2 focus:ring-aqua/40 focus:border-aqua dark:bg-white/[0.04] dark:border-night-line dark:text-night-ink dark:placeholder:text-night-sub/60 dark:focus:ring-night-cyan/30 dark:focus:border-night-cyan';
 
 export default function LidmaatschapForm() {
   const [status, setStatus] = useState<Status>('idle');
@@ -62,9 +62,9 @@ export default function LidmaatschapForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800">
+      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-green-800 dark:bg-night-cyan/10 dark:border-night-cyan/25 dark:text-night-cyan">
         <p className="font-semibold mb-1">Bedankt voor je aanmelding!</p>
-        <p className="text-sm">De ledenadministratie neemt binnenkort contact met je op.</p>
+        <p className="text-sm dark:text-night-cyan/90">De ledenadministratie neemt binnenkort contact met je op.</p>
       </div>
     );
   }
@@ -101,7 +101,7 @@ export default function LidmaatschapForm() {
           </label>
         </div>
         {voorWie === 'minderjarige' && (
-          <p className="text-xs text-sub mt-2">
+          <p className="text-xs text-sub mt-2 dark:text-night-sub">
             Vul hieronder de gegevens van de minderjarige in. Dit formulier wordt ingevuld door een ouder of
             verzorger.
           </p>
@@ -203,7 +203,7 @@ export default function LidmaatschapForm() {
 
       <div>
         <label htmlFor="opmerkingen" className={fieldLabel}>
-          Opmerkingen <span className="text-sub font-normal">(optioneel)</span>
+          Opmerkingen <span className="text-sub font-normal dark:text-night-sub">(optioneel)</span>
         </label>
         <textarea
           id="opmerkingen"
@@ -215,8 +215,8 @@ export default function LidmaatschapForm() {
       </div>
 
       {/* Lidwordingsverklaring */}
-      <div className="border-t border-line pt-6">
-        <label className="flex items-start gap-3 text-sm text-ink">
+      <div className="border-t border-line pt-6 dark:border-night-line">
+        <label className="flex items-start gap-3 text-sm text-ink dark:text-night-ink">
           <input type="checkbox" name="akkoordLidwording" required className="mt-1 accent-aqua" />
           <span>
             Ik verklaar hierbij dat ik lid word van Zwemvereniging de Blauwe Schuur. Ik ken en ga akkoord met de{' '}
@@ -224,7 +224,7 @@ export default function LidmaatschapForm() {
               href="/pages/lidmaatschap"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-aqua underline hover:text-aqua-dark"
+              className="text-aqua underline hover:text-aqua-dark dark:text-night-cyan dark:hover:text-night-violet"
             >
               voorwaarden voor het lidmaatschap en opzegging daarvan
             </a>
@@ -234,11 +234,11 @@ export default function LidmaatschapForm() {
       </div>
 
       {/* Privacy toestemmingen */}
-      <div className="border-t border-line pt-6 space-y-6">
-        <h3 className="text-sm font-semibold text-ink">Toestemmingen</h3>
+      <div className="border-t border-line pt-6 space-y-6 dark:border-night-line">
+        <h3 className="text-sm font-semibold text-ink dark:text-night-ink">Toestemmingen</h3>
 
         <fieldset>
-          <legend className="text-sm text-ink mb-2">
+          <legend className="text-sm text-ink mb-2 dark:text-night-ink">
             Ik geef toestemming voor het publiceren van bijvoorbeeld foto&apos;s en/of filmpjes van mij op website
             en social media kanalen
           </legend>
@@ -255,7 +255,7 @@ export default function LidmaatschapForm() {
         </fieldset>
 
         <fieldset>
-          <legend className="text-sm text-ink mb-2">
+          <legend className="text-sm text-ink mb-2 dark:text-night-ink">
             Ik geef toestemming voor het beschikbaar stellen van mijn naam en e-mailadres aan sponsors van de
             vereniging zodat zij mij kunnen benaderen voor aanbiedingen
           </legend>
@@ -272,7 +272,7 @@ export default function LidmaatschapForm() {
         </fieldset>
 
         <fieldset>
-          <legend className="text-sm text-ink mb-2">
+          <legend className="text-sm text-ink mb-2 dark:text-night-ink">
             Ik geef toestemming voor het opslaan van videomateriaal ter ondersteuning van de zwemtrainingen en
             verbetering van zwemtechniek
           </legend>
@@ -288,7 +288,7 @@ export default function LidmaatschapForm() {
           </div>
         </fieldset>
 
-        <p className="text-xs text-sub">
+        <p className="text-xs text-sub dark:text-night-sub">
           Mijn toestemming geldt alleen voor de hierboven aangevinkte en beschreven redenen, gegevens en
           organisaties. Voor nieuwe gegevensverwerkingen vraagt de vereniging mij opnieuw om toestemming. Ik mag
           mijn toestemming op elk moment intrekken.
@@ -296,7 +296,7 @@ export default function LidmaatschapForm() {
       </div>
 
       {status === 'error' && (
-        <p className="text-sm text-red-600" role="alert">
+        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
           {errorMessage}
         </p>
       )}
@@ -304,7 +304,7 @@ export default function LidmaatschapForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full bg-gradient-to-r from-aqua to-aqua-dark text-white py-3 rounded-xl font-bold shadow-lg shadow-aqua/30 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-aqua to-aqua-dark dark:from-night-cyan dark:to-night-violet text-white dark:text-night-bg py-3 rounded-xl font-bold shadow-lg shadow-aqua/30 dark:shadow-night-cyan/30 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? 'Versturen...' : 'Aanmelden als lid'}
       </button>

@@ -48,9 +48,9 @@ export default function InformatiePageClient({ pages }: { pages: InformatieTabPa
     <>
       <Header />
       <main className="flex-1">
-        <section className="bg-aqua-light border-b border-line py-12 px-6">
+        <section className="bg-aqua-light border-b border-line py-12 px-6 dark:bg-night-bg dark:border-night-line">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight">{huidigePagina.title}</h1>
+            <h1 className="text-4xl font-extrabold text-ink mb-2 tracking-tight dark:text-night-ink">{huidigePagina.title}</h1>
           </div>
         </section>
 
@@ -65,11 +65,11 @@ export default function InformatiePageClient({ pages }: { pages: InformatieTabPa
           <div className="max-w-4xl mx-auto">
             {huidigePagina.content ? (
               <div
-                className="text-ink/80 leading-relaxed space-y-6"
+                className="text-ink/80 leading-relaxed space-y-6 dark:text-night-ink/80"
                 dangerouslySetInnerHTML={{ __html: huidigePagina.content }}
               />
             ) : (
-              <p className="text-sub text-sm py-8 text-center">
+              <p className="text-sub dark:text-night-sub text-sm py-8 text-center">
                 Deze pagina kon niet worden geladen.
               </p>
             )}

@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'ZVDBS - Zwemvereniging de Blauwe Schuur',
   description: 'Zwemvereniging de Blauwe Schuur in Rhenen. Trainingen, competities en lidmaatschap.',
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL('https://www.zvdbs.nl'),
 };
 
 export default function RootLayout({

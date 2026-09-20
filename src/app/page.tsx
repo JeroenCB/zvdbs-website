@@ -19,9 +19,6 @@ export default async function Home() {
           <div className="pointer-events-none absolute -bottom-64 -left-44 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(6,182,212,0.14),rgba(6,182,212,0)_70%)]" />
 
           <div className="relative max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-aqua-light border border-line px-4 py-1.5 rounded-full text-xs font-bold text-aqua-dark mb-7">
-              ● Meer dan 100 leden &bull; Rhenen
-            </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-ink mb-5 leading-tight tracking-tight">
               Welkom bij{' '}
               <span className="bg-gradient-to-r from-aqua to-aqua-dark bg-clip-text text-transparent">

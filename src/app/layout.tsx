@@ -23,15 +23,16 @@ export const metadata: Metadata = {
 };
 
 // Zet de dark class op <html> vóórdat React hydrateert, zodat de pagina
-// nooit kort in de verkeerde modus opflitst (anti-FOUC). Voorkeur komt uit
-// localStorage, met het systeemthema als fallback voor eerste bezoekers.
+// nooit kort in de verkeerde modus opflitst (anti-FOUC). Licht is de
+// standaard voor iedereen die nog geen keuze heeft gemaakt; het
+// systeemthema van het apparaat wordt hiervoor bewust genegeerd. Alleen
+// wie zelf via de knop naar donker schakelt, krijgt dat via localStorage
+// bij een volgend bezoek terug.
 const themeInitScript = `
 (function () {
   try {
     var stored = localStorage.getItem('theme');
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var dark = stored ? stored === 'dark' : prefersDark;
-    if (dark) document.documentElement.classList.add('dark');
+    if (stored === 'dark') document.documentElement.classList.add('dark');
   } catch (e) {}
 })();
 `;

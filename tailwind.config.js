@@ -5,6 +5,10 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    // De pagina- en nieuwsinhoud (contact, lidmaatschap, etc.) bevat ruwe HTML
+    // met eigen Tailwind-classes. Zonder dit scant Tailwind die classes niet
+    // en genereert het er stilletjes geen CSS voor.
+    './public/data/**/*.json',
   ],
   theme: {
     extend: {

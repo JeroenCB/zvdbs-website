@@ -70,8 +70,8 @@ export default async function Home() {
         {/* Latest News */}
         <section className="max-w-6xl mx-auto px-6 pb-20">
           <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-extrabold text-ink">Laatste nieuws</h2>
-            <Link href="/news" className="text-aqua hover:text-aqua-dark font-semibold">
+            <h2 className="text-3xl font-extrabold text-ink dark:text-night-ink">Laatste nieuws</h2>
+            <Link href="/news" className="text-aqua hover:text-aqua-dark font-semibold dark:text-night-cyan dark:hover:text-night-violet">
               Alle berichten →
             </Link>
           </div>

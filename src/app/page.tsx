@@ -52,17 +52,20 @@ export default async function Home() {
             <InfoCard
               icon="🏊"
               title="Trainingen"
-              description="Woensdag en vrijdag trainingen voor junioren en senioren"
+              description="Maandag, woensdag en vrijdag trainingen voor junioren en senioren"
+              href="/informatie"
             />
             <InfoCard
               icon="🏆"
               title="Wedstrijden"
               description="Maandelijks landelijke competities en lokale evenementen"
+              href="/statistieken"
             />
             <InfoCard
               icon="👥"
               title="Community"
               description="Gezellige club met meer dan 100 leden"
+              href="/informatie?tab=wie"
             />
           </div>
         </section>

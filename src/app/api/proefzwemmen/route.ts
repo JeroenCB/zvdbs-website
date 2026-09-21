@@ -8,6 +8,7 @@ interface ProefzwemmenData {
   geboortedatum?: string;
   email?: string;
   telefoon?: string;
+  zwemdiplomaAB?: string;
   opmerkingen?: string;
 }
 
@@ -23,9 +24,10 @@ export async function POST(request: Request) {
   const geboortedatum = (data.geboortedatum || '').trim();
   const email = (data.email || '').trim();
   const telefoon = (data.telefoon || '').trim();
+  const zwemdiplomaAB = (data.zwemdiplomaAB || '').trim();
   const opmerkingen = (data.opmerkingen || '').trim();
 
-  if (!naam || !geboortedatum || !email || !telefoon) {
+  if (!naam || !geboortedatum || !email || !telefoon || !zwemdiplomaAB) {
     return NextResponse.json({ success: false, error: 'Vul alle verplichte velden in.' }, { status: 400 });
   }
   if (!EMAIL_REGEX.test(email)) {
@@ -44,6 +46,7 @@ export async function POST(request: Request) {
         <p><strong>Geboortedatum:</strong> ${escapeHtml(geboortedatum)}</p>
         <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>
         <p><strong>Telefoonnummer:</strong> ${escapeHtml(telefoon)}</p>
+        <p><strong>Zwemdiploma A en B:</strong> ${escapeHtml(zwemdiplomaAB === 'ja' ? 'Ja' : 'Nee')}</p>
         ${opmerkingen ? `<p><strong>Opmerkingen:</strong></p><p>${escapeHtml(opmerkingen).replace(/\n/g, '<br />')}</p>` : ''}
       `,
       replyTo: { email, name: naam },

@@ -20,6 +20,7 @@ export default function ProefzwemmenForm() {
       geboortedatum: formData.get('geboortedatum')?.toString() ?? '',
       email: formData.get('email')?.toString() ?? '',
       telefoon: formData.get('telefoon')?.toString() ?? '',
+      zwemdiplomaAB: formData.get('zwemdiplomaAB')?.toString() ?? '',
       opmerkingen: formData.get('opmerkingen')?.toString() ?? '',
     };
 
@@ -105,6 +106,21 @@ export default function ProefzwemmenForm() {
           placeholder="06 12345678"
         />
       </div>
+      <fieldset>
+        <legend className="block text-sm font-medium text-ink mb-2 dark:text-night-ink">
+          Heb je zwemdiploma A en B?
+        </legend>
+        <div className="flex gap-6">
+          <label className="flex items-center gap-2 text-sm text-ink dark:text-night-ink">
+            <input type="radio" name="zwemdiplomaAB" value="ja" required className="accent-aqua" />
+            Ja
+          </label>
+          <label className="flex items-center gap-2 text-sm text-ink dark:text-night-ink">
+            <input type="radio" name="zwemdiplomaAB" value="nee" required className="accent-aqua" />
+            Nee
+          </label>
+        </div>
+      </fieldset>
       <div>
         <label htmlFor="opmerkingen" className="block text-sm font-medium text-ink mb-2 dark:text-night-ink">
           Opmerkingen <span className="text-sub font-normal dark:text-night-sub">(optioneel)</span>

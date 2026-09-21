@@ -192,11 +192,11 @@ export default function LidmaatschapForm() {
         <div className="space-y-2">
           <label className={radioLabel}>
             <input type="radio" name="trainingenPerWeek" value="1" required className="mt-1 accent-aqua" />
-            1 keer per week (woensdag of vrijdag)
+            1 keer per week
           </label>
           <label className={radioLabel}>
             <input type="radio" name="trainingenPerWeek" value="2" required className="mt-1 accent-aqua" />
-            2 keer per week (woensdag en vrijdag)
+            2 keer per week
           </label>
         </div>
       </fieldset>

@@ -17,3 +17,6 @@ coverage/
 .nyc_output/
 .env
 payload-types.ts
+
+# Tijdelijke map voor het overzetten van media uit de oude WordPress-hosting (niet committen)
+_media-import/

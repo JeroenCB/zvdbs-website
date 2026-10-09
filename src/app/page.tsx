@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import NewsCard from '@/components/NewsCard';
 import InfoCard from '@/components/InfoCard';
+import NieuwsteRecordsKaart from '@/components/records/NieuwsteRecordsKaart';
 import Link from 'next/link';
 import { getNews } from '@/lib/pages';
 
@@ -69,6 +70,9 @@ export default async function Home() {
             />
           </div>
         </section>
+
+        {/* Nieuwste clubrecords (verdwijnt vanzelf als er niets te tonen is) */}
+        <NieuwsteRecordsKaart />
 
         {/* Latest News */}
         <section className="max-w-6xl mx-auto px-6 pb-20">

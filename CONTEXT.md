@@ -24,6 +24,9 @@ Lees dit bestand aan het begin van een nieuwe taak. Houd het bij als er iets ver
   `<div class="aspect-video max-w-2xl my-6"><iframe ...>`.
 - Clubrecords komen live uit een Google Sheet via `/api/records` (tabbladen
   Vlinderslag, Rugcrawl, Schoolslag, Borstcrawl, Wisselslag). Datums zijn tekst (dd/mm/jjjj).
+- Komende activiteiten (30 dagen) op de homepage komen uit de openbare Google-agenda
+  "DBS activiteiten" (eigenaar: activiteitencommissie) via `/api/activiteiten`, met
+  hetzelfde service account. Vereist dat de Google Calendar API aan staat.
 - Formulieren (contact, proefzwemmen, lidmaatschap) sturen mail via Brevo.
 - Omgevingsvariabelen staan in Vercel (namen in `.env.example`), niet in de repo.
 

@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import NewsCard from '@/components/NewsCard';
 import InfoCard from '@/components/InfoCard';
 import NieuwsteRecordsKaart from '@/components/records/NieuwsteRecordsKaart';
+import KomendeActiviteiten from '@/components/KomendeActiviteiten';
 import Link from 'next/link';
 import { getNews } from '@/lib/pages';
 
@@ -125,6 +126,9 @@ export default async function Home() {
             </Link>
           </div>
         </section>
+
+        {/* Komende activiteiten uit de Google-agenda (verdwijnt als er niets gepland staat) */}
+        <KomendeActiviteiten />
       </main>
       <Footer />
     </>

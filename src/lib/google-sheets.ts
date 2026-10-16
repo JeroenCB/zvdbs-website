@@ -7,7 +7,7 @@ import { JWT } from 'google-auth-library';
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 
-function getClient(): JWT {
+export function getClient(scopes: string[] = SCOPES): JWT {
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const rawKey = process.env.GOOGLE_PRIVATE_KEY;
 
@@ -24,7 +24,7 @@ function getClient(): JWT {
     );
   }
 
-  return new JWT({ email, key, scopes: SCOPES });
+  return new JWT({ email, key, scopes });
 }
 
 /**

@@ -51,7 +51,7 @@ export default async function NewsArticlePage({ params }: Props) {
       <main className="flex-1">
         {/* Article Header */}
         <section className="bg-white border-b border-line py-12 px-6 dark:bg-night-bg dark:border-night-line">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <Link href="/news" className="text-aqua hover:text-aqua-dark text-sm mb-4 inline-block dark:text-night-cyan dark:hover:text-night-violet">
               ← Terug naar nieuws
             </Link>
@@ -66,9 +66,9 @@ export default async function NewsArticlePage({ params }: Props) {
 
         {/* Article Content */}
         <section className="py-12 px-6">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <div
-              className="prose prose-lg max-w-none text-ink/80 leading-relaxed dark:prose-invert dark:text-night-ink/80"
+              className="artikel text-ink/80 dark:text-night-ink/80"
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
           </div>

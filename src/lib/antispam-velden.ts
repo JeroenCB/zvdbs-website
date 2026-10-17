@@ -4,3 +4,5 @@
 export const HONEYPOT_VELD = 'hp_website';
 /** Verborgen veld met het tijdstip (ms) waarop het formulier werd geladen. */
 export const STARTED_AT_VELD = 'startedAt';
+/** Verborgen veld met het Turnstile-token (door de widget ingevuld). */
+export const TURNSTILE_VELD = 'turnstileToken';

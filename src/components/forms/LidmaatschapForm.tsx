@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import AntispamVelden from './AntispamVelden';
-import { HONEYPOT_VELD, STARTED_AT_VELD } from '@/lib/antispam-velden';
+import AntispamVelden, { resetTurnstile } from './AntispamVelden';
+import { HONEYPOT_VELD, STARTED_AT_VELD, TURNSTILE_VELD } from '@/lib/antispam-velden';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 type VoorWie = 'zelf' | 'minderjarige' | '';
@@ -27,6 +27,7 @@ export default function LidmaatschapForm() {
     const payload = {
       [HONEYPOT_VELD]: formData.get(HONEYPOT_VELD)?.toString() ?? '',
       [STARTED_AT_VELD]: formData.get(STARTED_AT_VELD)?.toString() ?? '',
+      [TURNSTILE_VELD]: formData.get(TURNSTILE_VELD)?.toString() ?? '',
       voorWie: formData.get('voorWie')?.toString() ?? '',
       naam: formData.get('naam')?.toString() ?? '',
       geslacht: formData.get('geslacht')?.toString() ?? '',
@@ -59,6 +60,7 @@ export default function LidmaatschapForm() {
       form.reset();
       setVoorWie('');
     } catch (error) {
+      resetTurnstile();
       setStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Er ging iets mis.');
     }

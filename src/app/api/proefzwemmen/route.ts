@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: 'Ongeldige aanvraag.' }, { status: 400 });
   }
 
-  const spam = controleerAntispam(data);
+  const spam = await controleerAntispam(data, request);
   if (spam) return spam;
 
   const naam = (data.naam || '').trim();

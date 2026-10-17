@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendEmail, escapeHtml } from '@/lib/brevo';
+import { controleerAntispam } from '@/lib/antispam';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -10,6 +11,9 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json({ success: false, error: 'Ongeldige aanvraag.' }, { status: 400 });
   }
+
+  const spam = controleerAntispam(data);
+  if (spam) return spam;
 
   const naam = (data.naam || '').trim();
   const email = (data.email || '').trim();

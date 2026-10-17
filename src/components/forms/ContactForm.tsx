@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import AntispamVelden from './AntispamVelden';
+import { HONEYPOT_VELD, STARTED_AT_VELD } from '@/lib/antispam-velden';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -16,6 +18,8 @@ export default function ContactForm() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const payload = {
+      [HONEYPOT_VELD]: formData.get(HONEYPOT_VELD)?.toString() ?? '',
+      [STARTED_AT_VELD]: formData.get(STARTED_AT_VELD)?.toString() ?? '',
       naam: formData.get('naam')?.toString() ?? '',
       email: formData.get('email')?.toString() ?? '',
       bericht: formData.get('bericht')?.toString() ?? '',
@@ -52,6 +56,7 @@ export default function ContactForm() {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
+      <AntispamVelden />
       <div>
         <label htmlFor="naam" className="block text-sm font-medium text-ink mb-2 dark:text-night-ink">
           Naam

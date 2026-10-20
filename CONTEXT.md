@@ -13,7 +13,8 @@ Lees dit bestand aan het begin van een nieuwe taak. Houd het bij als er iets ver
 - Lokale mappen: pc thuis `D:\zvdbs-website`, laptop `C:\zvdbs-website\zvdbs-website`.
 - Werkwijze: Claude past bestanden aan, Jeroen doet zelf `git pull`, `git add -A`,
   `git commit -m "..."`, `git push`. Begin altijd met `git pull` (twee computers).
-- Domein zvdbs.nl: DNS bij VDX. Mail via de VDX-server (MX = `mail.zvdbs.nl.`).
+- Domein zvdbs.nl: DNS en webhosting (Webhosting XS) bij VDX, beheer via mijn.vdx.nl.
+  Mail van @zvdbs.nl loopt via de VDX-server. De antispamdienst PASS staat uit (betaald, € 2,50 p.m.).
 
 ## Inhoud
 - `public/data/pages.json` en `news.json` bevatten HTML in JSON. Bewerk met gerichte
@@ -27,31 +28,53 @@ Lees dit bestand aan het begin van een nieuwe taak. Houd het bij als er iets ver
 - Komende activiteiten (30 dagen) op de homepage komen uit de openbare Google-agenda
   "DBS activiteiten" (eigenaar: activiteitencommissie) via `/api/activiteiten`, met
   hetzelfde service account. Vereist dat de Google Calendar API aan staat.
-- Formulieren (contact, proefzwemmen, lidmaatschap) sturen mail via Brevo.
-- Omgevingsvariabelen staan in Vercel (namen in `.env.example`), niet in de repo.
+- Formulieren (contact, proefzwemmen, lidmaatschap) sturen mail via SMTP van VDX met de
+  mailbox `website@zvdbs.nl` (`src/lib/mail.ts`, `src/lib/smtp.ts`). Brevo
+  (`src/lib/brevo.ts`) is alleen de terugval als SMTP niet is ingesteld of mislukt.
+  Ontvangers: `CONTACT_TO_EMAIL` en `MEMBERSHIP_TO_EMAIL` (standaard secretaris@zvdbs.nl).
+- Spambeveiliging op de 3 formulieren (`src/lib/antispam.ts`, `src/components/forms/AntispamVelden.tsx`):
+  honeypot-veld `hp_website`, minimale invultijd 2 s (`startedAt`) en Cloudflare Turnstile
+  (token server-side gecontroleerd; zonder `TURNSTILE_SECRET_KEY` weigert de server in productie).
+- Omgevingsvariabelen staan in Vercel (namen in `.env.example`), niet in de repo:
+  Google (GOOGLE_*), Brevo (BREVO_*), SMTP (SMTP_HOST/PORT/USER/PASSWORD),
+  Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY), CONTACT_TO_EMAIL,
+  MEMBERSHIP_TO_EMAIL. Na wijzigen van een variabele is een nieuwe deploy nodig.
 
 ## Gedaan
-- Mailprobleem opgelost (MX-record).
 - Alle kapotte oude WordPress-links en -foto's gerepareerd (119 foto's + 2 PDF's lokaal).
 - "Nieuwste clubrecords" toegevoegd op de Clubrecords-tab en de homepage
   (`src/lib/laatsteWedstrijd.ts`: datums max. 3 dagen uit elkaar = één wedstrijd).
 - Verslag Landelijke A Competitie deel 1 (3 oktober 2026) geplaatst.
 - Laptop-opzet getest: clone, `npm install`, `npm run dev`, push en deploy werken.
+- Komende activiteiten uit Google Agenda werken (Calendar API aangezet).
+- Spambeveiliging formulieren: honeypot, invultijd en Turnstile live (okt 2026).
+- Mailincident 15-20 okt 2026: Brevo's gedeelde IP stond op de SpamCop-blocklist en de
+  VDX-mailserver weigerde Brevo-mail (soft bounces, VDX zet de blocklist niet uit).
+  Opgelost door formulier-mail via SMTP van VDX te sturen (`website@zvdbs.nl`).
+  Gemiste inzendingen in die periode: 1 echte aanmelding, handmatig doorgestuurd.
 
 ## Open punten
-1. Spam op formulieren: Cloudflare Turnstile plus servercontrole in de 3 API-routes
-   (code nog niet geschreven; eerst site-key en secret in Vercel zetten, dan pas pushen).
-   Daarnaast een Vercel Firewall-regel: formulier-API's blokkeren buiten Nederland,
-   eerst op "Log" om te zien waar de spam vandaan komt.
-2. `/api/news` en `/admin/news` hebben geen inlog en werken niet op Vercel
-   (geen schrijfrechten): verwijderen of beveiligen.
-3. Nieuws plaatsen zonder Claude: opties zijn Google Docs-import, Sanity-redactietool
-   of een eigen beheerscherm. Jeroen bespreekt dit eerst met de rest.
-4. Sheet-fouten: 4x50 wisselslag MJO16 (03/10/2026) heeft plaats Veenendaal (moet
+1. `/api/news` en `/admin/news` (geen inlog, werken niet op Vercel) gaan offline door ze
+   naar `src/app/_offline/` te verplaatsen (Next negeert mappen met een underscore).
+   De bestanden blijven bewaard. Daarna: nieuws plaatsen zonder Claude via een
+   Google Docs-import bouwen (Jeroen wil dit eerst proberen; andere opties: Sanity of
+   een eigen beheerscherm).
+2. Optionele Vercel Firewall-regel: formulier-API's blokkeren buiten Nederland, eerst
+   op "Log". Nu minder nodig, want Turnstile en honeypot draaien al. Nadeel: Nederlanders
+   in het buitenland of met VPN kunnen niets versturen.
+3. Brevo blijft de terugval voor formulier-mail. Besluit: laten staan of uitzetten?
+   Zo laten, dan staat Brevo niet in de SPF-record van zvdbs.nl. Houd de Vercel-runtime-logs
+   in de gaten op "versturen via SMTP mislukt".
+4. Spam in de mailbox zelf (okt 2026: elke 15 min campagnes): overweeg PASS (€ 2,50 p.m.)
+   of het spamfilter in het VDX-paneel. Besluit voor het bestuur.
+5. AVG/privacy: `app@zvdbs.nl` stuurt door naar een privé-Gmail van Jeroen; controleer
+   bij `secretaris@zvdbs.nl` onder Doorsturen of er geen extern adres staat. Het
+   wachtwoord van `website@zvdbs.nl` alleen in Vercel bewaren.
+6. AVG: toestemming voor foto's en filmpjes van kinderen controleren.
+7. Sheet-fouten: 4x50 wisselslag MJO16 (03/10/2026) heeft plaats Veenendaal (moet
    Driebergen zijn); 200 vrij MO18 heeft datum "10.40,11".
-5. Pagina's `nieuwsoverzicht` en `nieuwsarchief` zijn WordPress-restanten: verwijderen?
-6. Foto's in het nieuwste artikel zijn klein (586 px): originelen vervangen.
-7. AVG: toestemming voor foto's en filmpjes van kinderen controleren.
-8. Opruimen door Jeroen: map `_media-import`, zips in Downloads, 21 bestanden
-   `zvdbs-media-*.zip` op de Plesk-server.
-9. Testen of Claude op de laptop in de repo kan werken (nieuwe taak, laptop, binnenste map).
+8. Pagina's `nieuwsoverzicht` en `nieuwsarchief` zijn WordPress-restanten: verwijderen?
+9. Foto's in het nieuwste artikel zijn klein (586 px): originelen vervangen.
+10. Opruimen door Jeroen: map `_media-import`, zips in Downloads, 21 bestanden
+    `zvdbs-media-*.zip` op de VDX-server.
+11. Testen of Claude op de laptop in de repo kan werken (nieuwe taak, laptop, binnenste map).

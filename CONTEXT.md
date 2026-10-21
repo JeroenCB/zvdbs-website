@@ -78,3 +78,5 @@ Lees dit bestand aan het begin van een nieuwe taak. Houd het bij als er iets ver
 10. Opruimen door Jeroen: map `_media-import`, zips in Downloads, 21 bestanden
     `zvdbs-media-*.zip` op de VDX-server.
 11. Testen of Claude op de laptop in de repo kan werken (nieuwe taak, laptop, binnenste map).
+12. Halloween-overlay (`src/components/HalloweenOverlay.tsx`, ingeladen in `layout.tsx`) staat aan.
+    Na Halloween uitzetten: `HALLOWEEN_AAN = false`, of het bestand en de regel in `layout.tsx` weghalen.

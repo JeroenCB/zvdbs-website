@@ -10,6 +10,8 @@
  * Uitzetten na Halloween: zet HALLOWEEN_AAN op false (of haal de regel uit layout.tsx).
  */
 
+import HalloweenKlikVleermuizen from './HalloweenKlikVleermuizen';
+
 const HALLOWEEN_AAN = true;
 
 const BAT_PATH =
@@ -43,6 +45,12 @@ html.dark .hw-bat path{fill:#C4B5FD}
 .hw-bat--2{top:42%;width:30px;animation-duration:30s;animation-delay:-17s;opacity:.8}
 .hw-bat--3{top:66%;width:36px;animation-duration:38s;animation-delay:-28s;opacity:.7}
 
+.hw-klik{position:absolute;width:32px;margin:-7px 0 0 -16px;animation:hw-weg 1.4s ease-out forwards}
+.hw-klik svg{animation:hw-flap .2s ease-in-out infinite alternate;transform-origin:50% 60%}
+.hw-klik path{fill:#1E1B2E}
+html.dark .hw-klik path{fill:#C4B5FD}
+@keyframes hw-weg{0%{transform:translate(0,0) scale(.3);opacity:1}70%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1);opacity:0}}
+
 @keyframes hw-vlieg{from{transform:translateX(-80px)}to{transform:translateX(calc(100vw + 80px))}}
 @keyframes hw-golf{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
 @keyframes hw-flap{from{transform:scaleY(1)}to{transform:scaleY(.45)}}
@@ -55,7 +63,7 @@ html.dark .hw-bat path{fill:#C4B5FD}
   .hw-bat--3{display:none}
 }
 @media (prefers-reduced-motion:reduce){
-  .hw-bat{display:none}
+  .hw-bat,.hw-klik{display:none}
   .hw-spider{animation:none}
 }
 @media print{.hw-overlay{display:none}}
@@ -114,6 +122,8 @@ export default function HalloweenOverlay() {
       <Bat nr={1} />
       <Bat nr={2} />
       <Bat nr={3} />
+
+      <HalloweenKlikVleermuizen batPath={BAT_PATH} />
     </div>
   );
 }

@@ -59,25 +59,55 @@ function gooi(laag: HTMLElement, doelX: number, doelY: number) {
   // Start: net onder het scherm, ongeveer in het midden (de "werper" staat voor het scherm).
   const startX = breedte / 2 + (Math.random() - 0.5) * breedte * 0.3;
   const startY = hoogte + 60;
-  // Boog: het hoogste punt ligt boven de lijn tussen start en doel.
-  const midX = (startX + doelX) / 2;
-  const midY = Math.max(16, Math.min(startY, doelY) - (Math.abs(startY - doelY) * 0.3 + 60));
 
-  const pos = (x: number, y: number, schaal: number, draai: number) =>
-    `translate(${x - BAL / 2}px, ${y - BAL / 2}px) scale(${schaal}) rotate(${draai}deg)`;
+  // Echte worp in 3D, platgeslagen naar het scherm (perspectief):
+  // - de bal beweegt met constante snelheid van dichtbij (diepte 1) naar ver weg (diepte K);
+  // - zwaartekracht geeft een parabool in de hoogte;
+  // - alles wordt gedeeld door de diepte, dus de bal gaat eerst snel en groot, daarna
+  //   langzamer en kleiner, en de boog loopt vloeiend af in plaats van met een knik.
+  const SCHAAL_START = 3.4;
+  const SCHAAL_EIND = 0.9;
+  const K = SCHAAL_START / SCHAAL_EIND;
+  const STAPPEN = 32;
+
+  const afstand = Math.hypot(doelX - startX, doelY - startY);
+  let boog = afstand * 0.55 + 140; // hoogte van de boog in px (op diepte 1)
+
+  const punt = (t: number, boogHoogte: number) => {
+    const z = 1 + (K - 1) * t;
+    const u = (t * K) / z; // perspectief-correcte voortgang over het scherm
+    return {
+      x: startX + (doelX - startX) * u,
+      y: startY + (doelY - startY) * u - (4 * boogHoogte * t * (1 - t)) / z,
+      schaal: SCHAAL_START / z,
+    };
+  };
+
+  // Boog verlagen als de bal anders boven het scherm uit zou vliegen.
+  for (let poging = 0; poging < 5; poging++) {
+    let hoogstePunt = Infinity;
+    for (let i = 0; i <= STAPPEN; i++) hoogstePunt = Math.min(hoogstePunt, punt(i / STAPPEN, boog).y);
+    if (hoogstePunt >= 16) break;
+    boog *= 0.7;
+  }
+
+  const draaiing = (Math.random() < 0.5 ? -1 : 1) * (360 + Math.random() * 180);
+  const frames: Keyframe[] = [];
+  for (let i = 0; i <= STAPPEN; i++) {
+    const t = i / STAPPEN;
+    const p = punt(t, boog);
+    frames.push({
+      offset: t,
+      transform: `translate(${(p.x - BAL / 2).toFixed(1)}px, ${(p.y - BAL / 2).toFixed(1)}px) scale(${p.schaal.toFixed(3)}) rotate(${(draaiing * t).toFixed(0)}deg)`,
+    });
+  }
 
   const bal = document.createElement('div');
   bal.className = 'kb-bal';
   worp.appendChild(bal);
 
-  const vlucht = bal.animate(
-    [
-      { transform: pos(startX, startY, 3.4, 0) },
-      { transform: pos(midX, midY, 1.7, 200), offset: 0.5 },
-      { transform: pos(doelX, doelY, 0.9, 400) },
-    ],
-    { duration: 620, easing: 'cubic-bezier(.25,.1,.55,1)', fill: 'forwards' },
-  );
+  // easing 'linear': de vertraging zit al in het perspectief van de frames.
+  const vlucht = bal.animate(frames, { duration: 700, easing: 'linear', fill: 'forwards' });
 
   vlucht.onfinish = () => {
     bal.remove();

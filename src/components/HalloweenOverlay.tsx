@@ -12,7 +12,8 @@
 
 import HalloweenKlikVleermuizen from './HalloweenKlikVleermuizen';
 
-const HALLOWEEN_AAN = true;
+// Uit sinds nov 2026; volgend jaar weer op true zetten.
+const HALLOWEEN_AAN = false;
 
 const BAT_PATH =
   'M0 8 Q5 0 10 5 Q12 1 14 5 Q16 1 18 5 Q23 0 28 8 Q22 6 18 11 Q14 8 10 11 Q6 6 0 8Z';

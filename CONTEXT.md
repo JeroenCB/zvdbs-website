@@ -78,5 +78,9 @@ Lees dit bestand aan het begin van een nieuwe taak. Houd het bij als er iets ver
 10. Opruimen door Jeroen: map `_media-import`, zips in Downloads, 21 bestanden
     `zvdbs-media-*.zip` op de VDX-server.
 11. Testen of Claude op de laptop in de repo kan werken (nieuwe taak, laptop, binnenste map).
-12. Halloween-overlay (`src/components/HalloweenOverlay.tsx`, ingeladen in `layout.tsx`) staat aan.
-    Na Halloween uitzetten: `HALLOWEEN_AAN = false`, of het bestand en de regel in `layout.tsx` weghalen.
+12. Seizoens-overlays, ingeladen in `layout.tsx`, raken de rest van de site niet aan:
+    - Halloween (`HalloweenOverlay.tsx` + `HalloweenKlikVleermuizen.tsx`): staat UIT
+      (`HALLOWEEN_AAN = false`). Bewaard voor volgend jaar.
+    - Kerst (`KerstOverlay.tsx` + `KerstSneeuwballen.tsx`): gaat vanzelf aan van 1 nov t/m 28 dec
+      (`START`/`EINDE`, datum gecontroleerd in de browser). Klik op lege plek = 3D-sneeuwbal.
+    - Volgende: oud & nieuw-overlay vanaf 29 december.

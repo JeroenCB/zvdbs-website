@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Sora } from 'next/font/google';
 import './globals.css';
 import HalloweenOverlay from '@/components/HalloweenOverlay';
+import KerstOverlay from '@/components/KerstOverlay';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default function RootLayout({
           {children}
         </div>
         <HalloweenOverlay />
+        <KerstOverlay />
       </body>
     </html>
   );

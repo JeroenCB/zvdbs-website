@@ -57,8 +57,30 @@ Lees dit bestand aan het begin van een nieuwe taak. Houd het bij als er iets ver
 1. `/api/news` en `/admin/news` (geen inlog, werken niet op Vercel) gaan offline door ze
    naar `src/app/_offline/` te verplaatsen (Next negeert mappen met een underscore).
    De bestanden blijven bewaard. Daarna: nieuws plaatsen zonder Claude via een
-   Google Docs-import bouwen (Jeroen wil dit eerst proberen; andere opties: Sanity of
-   een eigen beheerscherm).
+   Google Docs-import bouwen. Besluiten (10 nov 2026):
+   - Bron: Drive-map "Website" (in gedeelde map "ZVDBS - Trainersinformatie", alleen
+     vertrouwde mensen). Eén submap per artikel met precies één Google Doc; alleen die Doc
+     wordt gelezen. Foto's staan in de Doc. Titel/Auteur/Datum als vaste regels bovenin.
+   - Publiceren = "website-ready" in de mapnaam (hoofdletters/spatie/streepje maakt niet uit).
+     Weghalen uit de naam = artikel offline. Wijzigingen in de Doc komen mee.
+   - Beveiliging A: pas importeren als de Doc 30 min niet is aangepast.
+     Beveiliging C: import zet een opmerking in de Doc als het online staat; bijna-goede
+     namen ("Webiste ready") geven een waarschuwing.
+   - Uitvoering: automatisch script via GitHub Action (geen Claude), commit naar main.
+     Draait 1x per nacht + handmatig via GitHub (Actions → Run workflow).
+     Apart service account, rol Reageerder op de map. Repo is privé.
+   - Bestaand artikel 3-10-2026 (id 12) bij eerste run koppelen aan zijn map (geen dubbel).
+   - Artikelen uit Drive alleen in de Doc wijzigen, niet in news.json (wordt overschreven).
+   - GEBOUWD (nov 2026), nog niet getest met echte Drive: `scripts/nieuws-import/`
+     (`import.mjs`, `omzetten.mjs`, `status.json`, `LEESMIJ-schrijvers.md`) en
+     `.github/workflows/nieuws-import.yml`. Leest de Doc via de Google Docs API (moet aan
+     staan in het Cloud-project). Foto's naar `public/images/news/<slug>/1.jpg` (max 1600 px,
+     zonder GPS/EXIF). Video's via youtube-nocookie. Drive-artikelen hebben veld `bron` in
+     news.json. Veiligheden: stopt als de map niet bereikbaar is, bij >2 verwijderingen
+     tegelijk, bij afwijkende opmaak van news.json, en slaat mappen over met een datum waarop
+     al een handmatig artikel bestaat (eerst koppelen in `status.json`).
+     Nachtelijke run staat nog UIT (schedule in de workflow), eerst proef draaien.
+     GitHub-secrets: GOOGLE_NIEUWS_SA_KEY, DRIVE_NIEUWS_MAP_ID; variabele IMPORT_GIT_EMAIL.
 2. Optionele Vercel Firewall-regel: formulier-API's blokkeren buiten Nederland, eerst
    op "Log". Nu minder nodig, want Turnstile en honeypot draaien al. Nadeel: Nederlanders
    in het buitenland of met VPN kunnen niets versturen.

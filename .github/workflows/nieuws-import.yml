@@ -1,0 +1,78 @@
+# Nieuws-import uit Google Drive (zie scripts/nieuws-import/import.mjs en CONTEXT.md).
+# Handmatig starten: GitHub -> Actions -> "Nieuws importeren" -> Run workflow.
+
+name: Nieuws importeren
+
+on:
+  workflow_dispatch:
+    inputs:
+      modus:
+        description: 'proef = alleen laten zien wat er zou gebeuren; echt = plaatsen op de website'
+        type: choice
+        options: [proef, echt]
+        default: proef
+      veel_verwijderen:
+        description: 'Meer dan 2 artikelen tegelijk offline halen toestaan'
+        type: boolean
+        default: false
+  # Elke nacht. Staat nog UIT tot de proef goed is gegaan; dan het hekje (#) voor de twee
+  # regels hieronder weghalen. Tijd is in UTC: 2:00 UTC = 3:00 (winter) / 4:00 (zomer) in NL.
+  # schedule:
+  #   - cron: '0 2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nieuws-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MODUS: ${{ github.event_name == 'schedule' && 'echt' || inputs.modus }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Afhankelijkheden installeren
+        working-directory: scripts/nieuws-import
+        run: npm install --no-audit --no-fund
+
+      - name: Artikelen importeren
+        env:
+          GOOGLE_NIEUWS_SA_KEY: ${{ secrets.GOOGLE_NIEUWS_SA_KEY }}
+          DRIVE_NIEUWS_MAP_ID: ${{ secrets.DRIVE_NIEUWS_MAP_ID }}
+          TOESTAAN_VEEL_VERWIJDEREN: ${{ inputs.veel_verwijderen && 'ja' || 'nee' }}
+        run: node scripts/nieuws-import/import.mjs
+
+      - name: Proefresultaat bewaren (1 dag)
+        if: env.MODUS == 'proef' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nieuws-proef
+          path: nieuws-proef/
+          retention-days: 1
+          if-no-files-found: ignore
+
+      - name: Wijzigingen opslaan (commit naar main)
+        if: env.MODUS == 'echt'
+        run: |
+          # Vercel kan deploys blokkeren als de commit-auteur geen lid is van het Vercel-project.
+          # Daarom committen we met het e-mailadres uit de repository-variabele IMPORT_GIT_EMAIL
+          # (Settings -> Secrets and variables -> Actions -> Variables).
+          git config user.name "${{ vars.IMPORT_GIT_NAME || 'nieuws-import' }}"
+          git config user.email "${{ vars.IMPORT_GIT_EMAIL || 'nieuws-import@users.noreply.github.com' }}"
+          git add public/data/news.json public/images/news scripts/nieuws-import/status.json
+          if git diff --cached --quiet; then
+            echo "Geen wijzigingen."
+            exit 0
+          fi
+          git commit -m "Nieuws-import uit Google Drive"
+          git pull --rebase
+          git push

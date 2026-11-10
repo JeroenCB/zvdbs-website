@@ -20,3 +20,6 @@ payload-types.ts
 
 # Tijdelijke map voor het overzetten van media uit de oude WordPress-hosting (niet committen)
 _media-import/
+
+# Proefuitvoer van de nieuws-import (niet committen)
+nieuws-proef/

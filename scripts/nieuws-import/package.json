@@ -1,0 +1,10 @@
+{
+  "name": "zvdbs-nieuws-import",
+  "private": true,
+  "type": "module",
+  "description": "Importeert nieuwsartikelen uit Google Drive naar public/data/news.json. Draait alleen in de GitHub Action, niet op Vercel.",
+  "dependencies": {
+    "google-auth-library": "11.0.2",
+    "sharp": "0.33.5"
+  }
+}

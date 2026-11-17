@@ -1,5 +1,7 @@
 {
   "_uitleg": "Bijgehouden door de nieuws-import. 'koppelingen': Drive-map-ID -> id van een bestaand artikel in news.json (of \"nieuw\"). 'meldingen': welke opmerking al in welke Doc is gezet, zodat die niet elke nacht terugkomt.",
   "koppelingen": {},
-  "meldingen": {}
+  "meldingen": {
+    "1bHL3H_N3Q0WzAickFb35sBIpMTdnMFuXn0LWcFIgIzQ": "online:47c19a6cf79ee7eb"
+  }
 }
